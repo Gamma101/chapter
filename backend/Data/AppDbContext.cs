@@ -1,10 +1,11 @@
-﻿using Chapter.Models;
+﻿using backend.Models;
+using Chapter.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Chapter.Data
 {
-    public class AppDBContext : DbContext
+    public class AppDBContext : IdentityDbContext<AppUser>
     {
         public AppDBContext(DbContextOptions dbContextOptions)
             :base(dbContextOptions)
