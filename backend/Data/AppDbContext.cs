@@ -11,10 +11,11 @@ namespace Chapter.Data
         {
         }
 
-        public DbSet<Books> Books { get; set; }
-        public DbSet<Ratings> Ratings { get; set; }
-        public DbSet<ReadingStatuses> ReadingStatuses { get; set; }
-        public DbSet<Reviews> Reviews { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
+        public DbSet<ReadingStatus> ReadingStatuses { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<Wishlist> Wishlists { get; set; }
 
     }
 }
