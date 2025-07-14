@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image"
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import {
   Carousel,
   CarouselContent,
@@ -23,13 +23,13 @@ export default function PopularCatalog() {
   const [books, setBooks] = useState<Book[] | null>(null)
   const googleAPIKey = process.env.NEXT_PUBLIC_GOOGLE_BOOKS_API_KEY
 
-  const fetchPopularBooks = async () => {
+  const fetchPopularBooks = useCallback(async () => {
     const url = `https://www.googleapis.com/books/v1/volumes?q=subject:fantasy&maxResults=10&key=${googleAPIKey}`
     const response = await fetch(url)
     const data = await response.json()
     console.log(data.items.volumeInfo)
     setBooks(data.items)
-  }
+  }, [googleAPIKey])
 
   const createCarousel = (innerBooks: Book[], carouselName: string) => {
     return (
@@ -73,7 +73,7 @@ export default function PopularCatalog() {
   }
   useEffect(() => {
     fetchPopularBooks()
-  }, [])
+  }, [fetchPopularBooks])
 
   let fictionCarousel
   if (books) {
