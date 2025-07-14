@@ -9,8 +9,18 @@ import {
   CarouselPrevious,
 } from "./ui/carousel"
 
+type Book = {
+  volumeInfo: {
+    imageLinks?: {
+      thumbnail: string
+    }
+    title: string
+  }
+  id: string
+}
+
 export default function PopularCatalog() {
-  const [books, setBooks] = useState()
+  const [books, setBooks] = useState<Book[] | null>(null)
   const googleAPIKey = process.env.NEXT_PUBLIC_GOOGLE_BOOKS_API_KEY
 
   const fetchPopularBooks = async () => {
@@ -21,7 +31,7 @@ export default function PopularCatalog() {
     setBooks(data.items)
   }
 
-  const createCarousel = (innerBooks, carouselName) => {
+  const createCarousel = (innerBooks: Book[], carouselName: string) => {
     return (
       <div className="container flex flex-col items-center justify-center w-[70%]">
         <h3 className="mr-auto mb-5 text-3xl font-bold">{carouselName}</h3>
@@ -30,10 +40,10 @@ export default function PopularCatalog() {
             {innerBooks &&
               innerBooks.map((book) => {
                 const thumbnailUrl =
-                  book.volumeInfo.imageLinks.thumbnail.replace(
+                  book.volumeInfo.imageLinks?.thumbnail.replace(
                     "http:",
                     "https:"
-                  )
+                  ) || "/empty-book.png"
                 return (
                   <CarouselItem className="basis-1/5" key={book.id}>
                     <Image
@@ -65,7 +75,10 @@ export default function PopularCatalog() {
     fetchPopularBooks()
   }, [])
 
-  const fictionCarousel = createCarousel(books, "Fiction")
+  let fictionCarousel
+  if (books) {
+    fictionCarousel = createCarousel(books, "Fiction")
+  }
 
   return (
     <div className="flex items-center justify-center mt-40">
