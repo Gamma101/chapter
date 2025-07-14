@@ -8,20 +8,25 @@ import BooksCarousel from "./BooksCarousel"
 const categories = ["fantasy", "drama", "comedy"]
 
 export default function PopularCatalog() {
-  const [booksByCategories, setBooksByCategories] = useState<Book[][]>([])
+  const [booksByCategories, setBooksByCategories] = useState<
+    Record<string, Book[]>
+  >({})
 
   useEffect(() => {
     const fetchData = async () => {
+      const newData: Record<string, Book[]> = {}
+
       for (const category of categories) {
         try {
           const bookCategoryList = await fetchPopularBooksByCategory(category)
           if (bookCategoryList) {
-            setBooksByCategories((prev) => [...(prev || []), bookCategoryList])
+            newData[category] = bookCategoryList
           }
         } catch (error) {
           console.error(`Error fetching ${category}:`, error)
         }
       }
+      setBooksByCategories((prev) => ({ ...prev, ...newData }))
     }
 
     fetchData()
@@ -29,14 +34,14 @@ export default function PopularCatalog() {
 
   return (
     <div className="flex items-center justify-center mt-40 flex-col gap-20">
-      {booksByCategories.map((bookList, key) => {
+      {categories.map((category) => {
         return (
           <BooksCarousel
-            key={key}
-            innerBooks={bookList}
+            key={category}
+            innerBooks={booksByCategories[category]}
             carouselName={
-              categories[key].charAt(0).toUpperCase() +
-              categories[key].slice(1, categories[key].length)
+              category.charAt(0).toUpperCase() +
+              category.slice(1, category.length)
             }
           />
         )
