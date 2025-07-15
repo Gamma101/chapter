@@ -35,7 +35,7 @@ export default function BooksCarousel({
                     width={180}
                     height={250}
                     unoptimized
-                    className="rounded-sm"
+                    className="rounded-sm h-auto"
                   />
                   <div className="">
                     <p>
