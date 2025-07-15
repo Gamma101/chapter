@@ -4,6 +4,7 @@ export type Book = {
       thumbnail: string
     }
     title: string
+    authors: string[]
   }
   id: string
 }

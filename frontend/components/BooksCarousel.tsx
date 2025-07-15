@@ -29,19 +29,25 @@ export default function BooksCarousel({
                 ) || "/empty-book.png"
               return (
                 <CarouselItem className="basis-1/5" key={book.id}>
-                  <Image
-                    alt="book"
-                    src={thumbnailUrl}
-                    width={180}
-                    height={250}
-                    unoptimized
-                    className="rounded-sm h-auto"
-                  />
                   <div className="">
-                    <p>
+                    <Image
+                      alt="book"
+                      src={thumbnailUrl}
+                      width={180}
+                      height={250}
+                      unoptimized
+                      className="rounded-sm"
+                    />
+                    <div className="relative bottom-7 left-1 w-10"></div>
+                  </div>
+                  <div className="">
+                    <p className="font-bold">
                       {book.volumeInfo.title.length < 25
                         ? book.volumeInfo.title
                         : book.volumeInfo.title.substring(0, 25) + "..."}
+                    </p>
+                    <p className="text-gray-400">
+                      {book.volumeInfo.authors[0]}
                     </p>
                   </div>
                 </CarouselItem>
