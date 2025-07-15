@@ -18,8 +18,8 @@ export default function BooksCarousel({
   return (
     <div className="container flex flex-col items-center justify-center w-[70%]">
       <h3 className="mr-auto mb-5 text-3xl font-bold">{carouselName}</h3>
-      <Carousel className="">
-        <CarouselContent>
+      <Carousel className="w-full">
+        <CarouselContent className="-ml-2 gap-2 sm:gap-4">
           {innerBooks &&
             innerBooks.map((book) => {
               const thumbnailUrl =
@@ -28,7 +28,10 @@ export default function BooksCarousel({
                   "https:"
                 ) || "/empty-book.png"
               return (
-                <CarouselItem className="basis-1/5" key={book.id}>
+                <CarouselItem
+                  className="xl:basis-1/5 lg:basis-1/4 md:basis-1/3 sm:basis-1/2"
+                  key={book.id}
+                >
                   <div className="">
                     <Image
                       alt="book"
