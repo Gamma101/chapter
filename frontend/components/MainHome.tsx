@@ -5,14 +5,16 @@ import Link from "next/link"
 
 export default function MainHome() {
   return (
-    <main className="flex flex-row justify-between items-center gap-30 mt-50">
+    <main className="flex lg:flex-row flex-col justify-between items-center gap-30 mt-50">
       <div className="flex flex-col gap-5">
-        <h2 className="text-5xl max-w-130 leading-15">
+        <h2 className="text-3xl max-w-130 lg:leading-15 lg:text-5xl md:text-5xl sm:text-4xl">
           Chapter - rate & review your favorite books with ease!
         </h2>
         <Link href={"/collection"}>
-          <Button className="p-6 rounded-full w-full cursor-pointer">
-            <p className="text-3xl">Let&apos;s Start!</p>
+          <Button className="lg:p-6 md:p-3 sm:p-0 rounded-full w-full cursor-pointer">
+            <p className="lg:text-3xl md:text-2xl sm:text-2xl">
+              Let&apos;s Start!
+            </p>
           </Button>
         </Link>
       </div>
