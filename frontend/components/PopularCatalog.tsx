@@ -37,7 +37,7 @@ export default function PopularCatalog() {
 
   return (
     <div className="flex items-center justify-center mt-40 flex-col gap-20">
-      {categories.map((category) => {
+      {categories.map((category, index) => {
         const categoryUpperCase =
           category.charAt(0).toUpperCase() + category.slice(1, category.length)
         return !isLoading ? (
@@ -47,7 +47,7 @@ export default function PopularCatalog() {
             carouselName={categoryUpperCase}
           />
         ) : (
-          <CarouselSkeleton categoryName={categoryUpperCase} />
+          <CarouselSkeleton key={index} categoryName={categoryUpperCase} />
         )
       })}
     </div>
