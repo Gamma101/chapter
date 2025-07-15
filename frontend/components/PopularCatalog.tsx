@@ -36,7 +36,7 @@ export default function PopularCatalog() {
   }, [])
 
   return (
-    <div className="flex items-center justify-center mt-40 flex-col gap-20">
+    <div className="flex items-center justify-center mt-40 flex-col gap-20 w-full ">
       {categories.map((category, index) => {
         const categoryUpperCase =
           category.charAt(0).toUpperCase() + category.slice(1, category.length)
