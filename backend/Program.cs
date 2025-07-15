@@ -79,6 +79,8 @@ builder.Services.AddAuthentication(options =>
     };
 });
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddHttpClient<IGoogleBooksService, GoogleBooksService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
