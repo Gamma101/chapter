@@ -1,6 +1,7 @@
 // contexts/AuthContext.tsx
+"use client"
+import { useRouter } from "next/navigation"
 import { createContext, useContext, useEffect, useState } from "react"
-import { useRouter } from "next/router"
 
 type User = {
   userName: string
