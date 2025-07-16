@@ -91,7 +91,8 @@ builder.Services.AddAuthentication(options =>
 });
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddHttpClient<IGoogleBooksService, GoogleBooksService>();
-
+builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 
 var app = builder.Build();
 
