@@ -37,6 +37,7 @@ namespace backend.Controllers
 
                 bookEntity = new Chapter.Models.Book
                 {
+                    
                     GoogleBookId = googleBook.Id,
                     Title = googleBook.VolumeInfo.Title ?? "No Title",
                     Authors = googleBook.VolumeInfo.Authors != null ? string.Join(",", googleBook.VolumeInfo.Authors) : "Unknown Author",
@@ -47,14 +48,17 @@ namespace backend.Controllers
                 await _dbContext.SaveChangesAsync();
     
             }
+
             var bookDto = new BookDto
             {
+                Id = bookEntity.Id,
                 GoogleBookId = bookEntity.GoogleBookId,
                 Title = bookEntity.Title,
                 Authors = bookEntity.Authors,
                 Description = bookEntity.Description,
                 ThumbnailUrl = bookEntity.ThumbnailUrl
             };
+        
             return Ok(bookDto);
             
         }
