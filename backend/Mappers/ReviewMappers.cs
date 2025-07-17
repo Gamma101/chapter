@@ -20,7 +20,8 @@ namespace backend.Mappers
             {
                 Title = createReviewDto.Title,
                 Content = createReviewDto.Content,
-                BookId = bookId
+                BookId = bookId,
+                CreatedAt = DateTime.UtcNow
 
             };
         }

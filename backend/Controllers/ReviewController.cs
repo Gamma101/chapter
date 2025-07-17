@@ -50,7 +50,7 @@ namespace backend.Controllers
             var reviewModel = reviewDto.ToReviewFromCreate(bookId);
             reviewModel.UserId = appUser.Id.ToString();
             await _reviewRepo.CreateAsync(reviewModel);
-            return CreatedAtAction(nameof(GetById), new { bookId, id = reviewModel.Id }, reviewModel.ToReviewDto());
+            return CreatedAtAction(nameof(GetById), new { bookId, reviewId = reviewModel.Id }, reviewModel.ToReviewDto());
         }
     }
 
