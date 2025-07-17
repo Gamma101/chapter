@@ -11,7 +11,8 @@ namespace backend.Mappers
             {
                 Title = reviewModel.Title,
                 Content = reviewModel.Content,
-                CreatedAt = reviewModel.CreatedAt
+                CreatedAt = reviewModel.CreatedAt,
+                CreatedBy = reviewModel.User.UserName
             };
         }
         public static Review ToReviewFromCreate(this CreateReviewDto createReviewDto, int bookId)
