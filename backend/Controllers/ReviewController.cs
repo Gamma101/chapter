@@ -67,6 +67,21 @@ namespace backend.Controllers
             if (reviewFromDb.UserId != appUser.Id) { return Forbid(); }
             return Ok(review.ToReviewDto());
         }
+        [HttpDelete("{reviewId:int}")]
+        [Authorize]
+        public async Task<IActionResult> Delete([FromRoute] int bookId, [FromRoute] int reviewId)
+        {
+            var username = User.GetUsername();
+            var appUser = await _userManager.FindByNameAsync(username);
+            var reviewFromDb = await _reviewRepo.GetByIdAsync(reviewId);
+
+            if (reviewFromDb.UserId != appUser.Id) { return Forbid(); }
+
+            var reviewModel = _reviewRepo.DeleteAsync(bookId, reviewId);
+            if (reviewModel == null) { return NotFound("Review for this book is not found"); }
+            return NoContent();  
+
+        }
     }
 
 }
