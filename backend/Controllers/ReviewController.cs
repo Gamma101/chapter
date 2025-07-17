@@ -29,9 +29,18 @@ namespace backend.Controllers
             var review = await _reviewRepo.GetByIdAsync(reviewId);
             if (review == null || review.BookId != bookId)
             {
-                return NotFound("Review not found for this book.");
+                return NotFound("Review is not found for this book.");
             }
             return Ok(review.ToReviewDto());
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllByBookId(int bookId)
+        {
+            if (!ModelState.IsValid) { return BadRequest(ModelState); }
+            var reviews = await _reviewRepo.GetAllByBookIdAsync(bookId);
+            if (reviews == null || reviews.Count == 0) { return NotFound("Reviews are not found for this book."); }
+            var reviewsDto = reviews.Select(r => r.ToReviewDto());
+            return Ok(reviewsDto);
         }
 
 

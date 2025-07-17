@@ -21,7 +21,12 @@ namespace backend.Repositories
             return await _dbContext.Reviews.Include(u => u.User).FirstOrDefaultAsync(r => r.Id == id);
         }
 
-        
+        public async Task<List<Review>> GetAllByBookIdAsync(int id)
+        {
+            return await _dbContext.Reviews.Include(u => u.User).Where(b => b.BookId == id).ToListAsync();
+        }
+
+
 
         public async Task<Review> CreateAsync(Review reviewModel)
         {
@@ -50,5 +55,7 @@ namespace backend.Repositories
             return reviewModel;
             
         }
+
+        
     }
 }
