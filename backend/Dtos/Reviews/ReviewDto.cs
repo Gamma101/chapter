@@ -8,5 +8,8 @@ namespace backend.Dtos.Reviews
         public string Content { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
 
+        public DateTime UpdatedAt { get; set; }
+        public string CreatedBy { get; set;} = string.Empty;
+
     }
 }
