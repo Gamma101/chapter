@@ -25,5 +25,14 @@ namespace backend.Mappers
 
             };
         }
+        public static Review ToReviewFromUpdate(this UpdateReviewRequestDto updateReviewDto)
+        {
+            return new Review
+            {
+                Title = updateReviewDto.Title,
+                Content = updateReviewDto.Content,
+                CreatedAt = DateTime.UtcNow
+            };
+        }
     }
 }

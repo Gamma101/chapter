@@ -6,6 +6,7 @@ namespace backend.Interfaces
     {
         Task<Review> GetByIdAsync(int id);
         Task<Review> CreateAsync(Review reviewModel);
+        Task<Review> UpdateAsync(int bookId, int reviewId, Review reviewModel);
        
 
     }

@@ -2,6 +2,7 @@
 using backend.Models;
 using Chapter.Data;
 using Chapter.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,5 +30,15 @@ namespace backend.Repositories
             return reviewModel;
         }
 
+        public async Task<Review> UpdateAsync(int bookId, int reviewId, Review reviewModel)
+        {
+            var exist = await _dbContext.Reviews.FirstOrDefaultAsync(r => r.Id == reviewId && r.BookId == bookId);
+            if (exist == null) { return null; }
+            exist.Title = reviewModel.Title;
+            exist.Content = reviewModel.Content;
+            await _dbContext.SaveChangesAsync();
+            return exist;
+
+        }
     }
 }
