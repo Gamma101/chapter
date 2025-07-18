@@ -2,7 +2,7 @@
 
 namespace backend.Dtos.BookRequest
 {
-    public class AddBookRequestDto
+    public class AddBookRequestByGoogleDto
     {
         [Required]
         public string GoogleBookId { get; set; }

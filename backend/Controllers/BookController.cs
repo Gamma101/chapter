@@ -15,14 +15,16 @@ namespace backend.Controllers
     {
         private readonly AppDBContext _dbContext;
         private readonly IGoogleBooksService _googleBooksService;
+        private readonly IBookRepository _bookRepo;
 
-        public BooksController(AppDBContext dbContext, IGoogleBooksService googleBooksService)
+        public BooksController(AppDBContext dbContext, IGoogleBooksService googleBooksService, IBookRepository bookRepo)
         {
             _dbContext = dbContext;
             _googleBooksService = googleBooksService;
+            _bookRepo = bookRepo;
         }
         [HttpGet("{googleBookId}")]
-        public async Task<ActionResult<BookDto>> GetBookByIdAsync(string googleBookId)
+        public async Task<ActionResult<BookDto>> GetBookByGoogleIdAsync(string googleBookId)
         {
             if (string.IsNullOrEmpty(googleBookId))
             {
@@ -31,7 +33,7 @@ namespace backend.Controllers
             var bookEntity = await _dbContext.Books.FirstOrDefaultAsync(b => b.GoogleBookId == googleBookId);
             if (bookEntity == null)
             {
-                var googleBook = await _googleBooksService.GetBookByIdAsync(googleBookId);
+                var googleBook = await _googleBooksService.GetByGoogleIdAsync(googleBookId);
                 if (googleBook == null || googleBook.VolumeInfo == null) { return NotFound("The book was not found."); }
 
 
@@ -61,6 +63,15 @@ namespace backend.Controllers
         
             return Ok(bookDto);
             
+        }
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetById([FromRoute] int id)
+        {
+            if(!ModelState.IsValid) { return BadRequest(); }
+            var book = await _bookRepo.GetByIdAsync(id);
+            if (book == null) {return NotFound("Book not found"); }
+            return Ok(book);
+
         }
 
     }
