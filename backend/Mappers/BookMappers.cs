@@ -11,7 +11,7 @@ namespace backend.Mappers
             {
                 GoogleBookId = bookModel.GoogleBookId,
 
-            }
+            };
         }
     }
 }
