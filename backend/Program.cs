@@ -61,10 +61,8 @@ builder.Services.AddDbContext<AppDBContext>(options => options.UseNpgsql(connect
 builder.Services.AddIdentity<AppUser, IdentityRole>(option =>
 {
     option.Password.RequireDigit = true;
-    option.Password.RequireLowercase = true;
     option.Password.RequireUppercase = true;
-    option.Password.RequireNonAlphanumeric = true;
-    option.Password.RequiredLength = 10;
+    option.Password.RequiredLength = 6;
 })
 .AddEntityFrameworkStores<AppDBContext>();
 
