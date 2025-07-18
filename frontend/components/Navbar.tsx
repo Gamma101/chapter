@@ -17,8 +17,12 @@ export default function Navbar({ className = "" }: { className?: string }) {
       <SearchBar />
       <div className="flex gap-5">
         <ThemeToggle />
-        <Button variant={"outline"}>Login</Button>
-        <Button>Sign Up</Button>
+        <Link href={"/auth"}>
+          <Button variant={"outline"}>Login</Button>
+        </Link>
+        <Link href={"/auth?isSignUp=true"}>
+          <Button>Sign Up</Button>
+        </Link>
       </div>
     </nav>
   )
