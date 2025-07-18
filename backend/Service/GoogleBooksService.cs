@@ -15,7 +15,7 @@ namespace backend.Service
             _configuration = configuration;
             _httpClient = httpClient;
         }
-        public async Task<GoogleBookItem?> GetBookByIdAsync(string volumeId)
+        public async Task<GoogleBookItem?> GetByGoogleIdAsync(string volumeId)
         {
             var apiKey = _configuration["GoogleBooks:ApiKey"];
             var url = $"https://www.googleapis.com/books/v1/volumes/{volumeId}?key={apiKey}";
