@@ -17,5 +17,10 @@ export default function ProtectedLayout({
       router.replace("/auth")
     }
   }, [isLoading, isAuthenticated, router])
-  return <div>{children}</div>
+  return (
+    <div>
+      <Navbar />
+      {children}
+    </div>
+  )
 }

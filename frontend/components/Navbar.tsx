@@ -4,8 +4,12 @@ import React from "react"
 import { Button } from "./ui/button"
 import ThemeToggle from "./ThemeToggle"
 import SearchBar from "./SearchBar"
+import { useAuth } from "@/context/AuthContext"
+import { User } from "lucide-react"
 
 export default function Navbar({ className = "" }: { className?: string }) {
+  const { isAuthenticated } = useAuth()
+
   return (
     <nav
       className={`p-5 rounded-b-xl flex justify-between items-center ${className}`}
@@ -15,14 +19,27 @@ export default function Navbar({ className = "" }: { className?: string }) {
         <h1 className="text-3xl font-bold">Chapter</h1>
       </Link>
       <SearchBar />
-      <div className="flex gap-5">
+      <div className="flex gap-5 items-center">
         <ThemeToggle />
-        <Link href={"/auth"}>
-          <Button variant={"outline"}>Login</Button>
-        </Link>
-        <Link href={"/auth?isSignUp=true"}>
-          <Button>Sign Up</Button>
-        </Link>
+        {isAuthenticated ? (
+          <Link href="/account">
+            <Button
+              variant={"outline"}
+              className="rounded-full cursor-pointer p-5"
+            >
+              <User className="dark:text-white text-black" />
+            </Button>
+          </Link>
+        ) : (
+          <div>
+            <Link href={"/auth"}>
+              <Button variant={"outline"}>Login</Button>
+            </Link>
+            <Link href={"/auth?isSignUp=true"}>
+              <Button>Sign Up</Button>
+            </Link>
+          </div>
+        )}
       </div>
     </nav>
   )
