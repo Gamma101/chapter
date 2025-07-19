@@ -15,3 +15,11 @@ export function useApi() {
   })
   return api
 }
+
+// usage example
+//   useEffect(() => {
+//     // Запрос к защищённому эндпоинту
+//     api.get('/protected-data')
+//       .then((response) => setData(response.data))
+//       .catch((error) => console.error('Ошибка:', error));
+//   }, []);

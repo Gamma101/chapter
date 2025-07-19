@@ -14,6 +14,7 @@ type AuthContextType = {
   login: (userData: User) => void
   logout: () => void
   isAuthenticated: boolean
+  isLoading: boolean
 }
 
 const AuthContext = createContext<AuthContextType>(null!)
@@ -21,12 +22,14 @@ const AuthContext = createContext<AuthContextType>(null!)
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const router = useRouter()
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user")
     if (storedUser) {
       setUser(JSON.parse(storedUser))
     }
+    setIsLoading(false)
   }, [])
 
   const login = (userData: User) => {
@@ -44,6 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     user,
     login,
     logout,
+    isLoading,
     isAuthenticated: !!user,
   }
 
