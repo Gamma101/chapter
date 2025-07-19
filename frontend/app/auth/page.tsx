@@ -8,7 +8,7 @@ export default function Auth() {
   const isSignUp = !!searchParams.get("isSignUp")
   return (
     <div className="flex items-center justify-center h-screen bg-[url('/lines-black.svg')] dark:bg-[url('/lines-white.svg')] bg-cover bg-center">
-      <AuthForm />
+      <AuthForm isSignUp={isSignUp} />
     </div>
   )
 }
