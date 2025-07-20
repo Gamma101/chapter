@@ -5,11 +5,13 @@ import axios from "axios"
 import Link from "next/link"
 import { useAuth } from "@/context/AuthContext"
 import { Loader } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 export default function AuthForm({ isSignUp }: { isSignUp: boolean }) {
   const [error, setError] = useState<string>("")
   const { login } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     const formData = new FormData(e.currentTarget)
@@ -34,6 +36,7 @@ export default function AuthForm({ isSignUp }: { isSignUp: boolean }) {
       })
       .then((data) => {
         login(data.data)
+        router.push("/account")
       })
       .catch((error) => {
         setError(error.response.data[0].description)
@@ -60,6 +63,7 @@ export default function AuthForm({ isSignUp }: { isSignUp: boolean }) {
       .then((data) => {
         if (data.data) {
           login(data.data)
+          router.push("/account")
         }
       })
       .catch((error) => {
