@@ -2,7 +2,7 @@
 import { Book } from "@/types/book"
 import axios from "axios"
 import Image from "next/image"
-import { useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
 export default function SearchPage() {
@@ -10,6 +10,19 @@ export default function SearchPage() {
   const query = searchParams.get("q")
   const googleAPIKey = process.env.NEXT_PUBLIC_GOOGLE_BOOKS_API_KEY
   const [data, setData] = useState<Book[] | null>(null)
+  const router = useRouter()
+
+  const checkBookAndRedirect = async (bookId: string) => {
+    await axios
+      .get(`http://localhost:5105/api/Books/${bookId}`)
+      .then((data) => {
+        console.log(data.data)
+        router.push(`book/${data.data.id}`)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
   useEffect(() => {
     const fetchBooksByQuery = async () => {
@@ -57,6 +70,7 @@ export default function SearchPage() {
                 return (
                   <div
                     key={key}
+                    onClick={() => checkBookAndRedirect(book.id)}
                     className="w-[200px] mb-8 flex flex-col items-center"
                   >
                     <div className="relative h-[250px] w-[180px]">
