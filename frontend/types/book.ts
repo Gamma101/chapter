@@ -8,3 +8,12 @@ export type Book = {
   }
   id: string
 }
+
+export type BackendBook = {
+  title: string
+  authors: string[]
+  description: string
+  thumbnailUrl: string
+  publishedDate: string
+  libraryEntries: string[]
+}
