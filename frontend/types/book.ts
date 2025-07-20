@@ -17,3 +17,11 @@ export type BackendBook = {
   publishedDate: string
   libraryEntries: string[]
 }
+
+export type Review = {
+  title: string
+  content: string
+  createdAt: string
+  updatedAt: string
+  createdBy: string
+}

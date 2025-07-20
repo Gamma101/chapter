@@ -1,6 +1,6 @@
 "use client"
 
-import { BackendBook } from "@/types/book"
+import { BackendBook, Review } from "@/types/book"
 import axios from "axios"
 import Image from "next/image"
 import { useParams } from "next/navigation"
@@ -10,8 +10,9 @@ export default function BookPage() {
   const params = useParams()
   const bookId = params.bookId as string
   const [bookInfo, setBookInfo] = useState<BackendBook | null>(null)
-  const [reviews, setReviews] = useState(null)
+  const [reviews, setReviews] = useState<Review[] | null>(null)
 
+  // Parse book information
   useEffect(() => {
     const parseBookInfo = async () => {
       await axios
@@ -27,8 +28,24 @@ export default function BookPage() {
     parseBookInfo()
   }, [bookId])
 
+  // Parse book reviews
+  useEffect(() => {
+    const parseBookReviews = async () => {
+      await axios
+        .get(`http://localhost:5105/api/books/${bookId}/reviews`)
+        .then((data) => {
+          console.log(data.data)
+          setReviews(data.data)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+    parseBookReviews()
+  }, [])
+
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex flex-col">
       {bookInfo && (
         <div className="container flex gap-10">
           <Image
@@ -43,6 +60,19 @@ export default function BookPage() {
             <h1 className="text-3xl font-bold">{bookInfo.title}</h1>
             <p>{bookInfo.description}</p>
           </div>
+        </div>
+      )}
+      {reviews && (
+        <div className="">
+          {reviews.map((preview, key) => {
+            return (
+              <div key={key}>
+                <p>{preview.title}</p>
+                <p>{preview.content}</p>
+                <p>{preview.createdBy}</p>
+              </div>
+            )
+          })}
         </div>
       )}
     </div>
