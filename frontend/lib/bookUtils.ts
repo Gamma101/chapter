@@ -1,4 +1,4 @@
-import { Book } from "@/types/Book"
+import { Book } from "@/types/book"
 
 const googleAPIKey = process.env.NEXT_PUBLIC_GOOGLE_BOOKS_API_KEY
 

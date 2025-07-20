@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from "react"
 import { fetchPopularBooksByCategory } from "@/lib/bookUtils"
-import { Book } from "@/types/Book"
+import { Book } from "@/types/book"
 import BooksCarousel from "./BooksCarousel"
 import CarouselSkeleton from "./CarouselSkeleton"
 const categories = ["fantasy", "drama", "comedy"]

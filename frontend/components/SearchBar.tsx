@@ -8,30 +8,26 @@ export default function SearchBar() {
   const [searchQuery, setSearchQuery] = useState<string>("")
   const router = useRouter()
 
-  const redirectUser = () => {
+  function onSubmit() {
     if (searchQuery) {
-      router.push(`/search?q=${searchQuery}`)
+      const formattedSearchQuery = searchQuery.replace(" ", "+")
+      router.push(`/search?q=${formattedSearchQuery}`)
     }
   }
 
   return (
-    <div className="flex items-center space-x-2">
+    <form action={onSubmit} className="flex items-center space-x-2">
       <Input
         type="text"
         className="px-3 py-2 bg-white"
         onChange={(e) => {
           setSearchQuery(e.target.value)
-          console.log(e.target.value)
         }}
         placeholder="Search book..."
       />
-      <Button
-        onClick={redirectUser}
-        variant={"outline"}
-        className="px-3 py-2 cursor-pointer"
-      >
+      <Button variant={"outline"} className="px-3 py-2 cursor-pointer">
         <Search />
       </Button>
-    </div>
+    </form>
   )
 }

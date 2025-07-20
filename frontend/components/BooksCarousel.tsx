@@ -1,4 +1,4 @@
-import { Book } from "@/types/Book"
+import { Book } from "@/types/book"
 import {
   Carousel,
   CarouselContent,
