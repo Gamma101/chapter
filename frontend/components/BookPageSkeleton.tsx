@@ -9,9 +9,11 @@ export default function BookPageSkeleton() {
         <div className="w-[50%] flex flex-col gap-5">
           <Skeleton className="h-10 w-[50%]" />
           <div className="mt-5 flex flex-col gap-5">
-            <Skeleton className="h-5 w-[90%]" />
+            <Skeleton className="h-5 w-[85%]" />
             <Skeleton className="h-5 w-[60%]" />
             <Skeleton className="h-5 w-[80%]" />
+            <Skeleton className="h-30 w-[90%]" />
+            <Skeleton className="h-30 w-[90%]" />
           </div>
         </div>
       </div>
