@@ -3,7 +3,7 @@
 import BookPageSkeleton from "@/components/BookPageSkeleton"
 import { BackendBook, Review } from "@/types/book"
 import axios from "axios"
-import { User2 } from "lucide-react"
+import { ThumbsDown, ThumbsUp, User2 } from "lucide-react"
 import Image from "next/image"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -74,27 +74,47 @@ export default function BookPage() {
                       return (
                         <div
                           key={key}
-                          className="flex gap-10 bg-secondary rounded-lg p-5"
+                          className="flex gap-10 bg-secondary rounded-lg p-5 justify-between items-center"
                         >
-                          <div className="flex items-center flex-col">
-                            <User2 />
-                            <p>{preview.createdBy}</p>
-                          </div>
+                          <div className="flex flex-row gap-5">
+                            <div className="flex items-center flex-col">
+                              <User2 />
+                              <p>
+                                {preview.createdBy.length > 8
+                                  ? preview.createdBy.slice(0, 8) + "..."
+                                  : preview.createdBy}
+                              </p>
+                            </div>
 
-                          <div className="">
-                            <p className="text-2xl font-semibold">
-                              {preview.title}
+                            <div className="wrap-anywhere">
+                              <p className="text-2xl font-semibold">
+                                {preview.title}
+                              </p>
+                              <p className="">
+                                {preview.content}
+                                {preview.content}
+                                {preview.content}
+                                {preview.content}
+                                {preview.content}
+                                {preview.content}
+                                {preview.content}
+                                {preview.content}
+                                {preview.content}
+                                {preview.content}
+                                {preview.content}
+                                {preview.content}
+                                {preview.content}
+                                {preview.content}
+                                {preview.content}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex flex-col items-center justify-between gap-2">
+                            <ThumbsUp className="text-green-400" />
+                            <p className="bg-sidebar-ring px-4 rounded-lg font-bold">
+                              0
                             </p>
-                            <p>
-                              {preview.content}
-                              {preview.content}
-                              {preview.content}
-                              {preview.content}
-                              {preview.content}
-                              {preview.content}
-                              {preview.content}
-                              {preview.content}
-                            </p>
+                            <ThumbsDown className="text-red-400" />
                           </div>
                         </div>
                       )
