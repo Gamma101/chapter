@@ -7,6 +7,8 @@ import {
   CarouselPrevious,
 } from "./ui/carousel"
 import Image from "next/image"
+import { checkBookAndRedirect } from "@/lib/bookUtils"
+import { useRouter } from "next/navigation"
 
 export default function BooksCarousel({
   innerBooks,
@@ -15,6 +17,7 @@ export default function BooksCarousel({
   innerBooks: Book[]
   carouselName: string
 }) {
+  const router = useRouter()
   return (
     <div className="container flex flex-col items-center justify-center w-[70%]">
       <h3 className="mr-auto mb-5 text-3xl font-bold">{carouselName}</h3>
@@ -29,10 +32,13 @@ export default function BooksCarousel({
                 ) || "/empty-book.png"
               return (
                 <CarouselItem
-                  className="xl:basis-1/5 lg:basis-1/4 md:basis-1/3 sm:basis-1/2"
+                  onClick={() => {
+                    checkBookAndRedirect(book.id, router)
+                  }}
+                  className="xl:basis-1/5 lg:basis-1/4 md:basis-1/3 cursor-pointer sm:basis-1/2"
                   key={book.id}
                 >
-                  <div className="">
+                  <div>
                     <Image
                       alt="book"
                       src={thumbnailUrl}
