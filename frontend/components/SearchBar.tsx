@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/utils"
 import { Search } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
-export default function SearchBar() {
+export default function SearchBar({ className = "" }: { className?: string }) {
   const [searchQuery, setSearchQuery] = useState<string>("")
   const router = useRouter()
 
@@ -16,7 +17,10 @@ export default function SearchBar() {
   }
 
   return (
-    <form action={onSubmit} className="flex items-center space-x-2">
+    <form
+      action={onSubmit}
+      className={cn("flex items-center space-x-2", className)}
+    >
       <Input
         type="text"
         className="px-3 py-2 bg-white"

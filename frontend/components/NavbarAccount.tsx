@@ -6,10 +6,10 @@ import { User } from "lucide-react"
 import { useAuth } from "@/context/AuthContext"
 import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover"
 
-export default function NavbarAccount() {
+export default function NavbarAccount({ className }: { className: string }) {
   const { isAuthenticated, user, logout } = useAuth()
   return (
-    <div className="">
+    <div className={className}>
       <div className="flex gap-5 items-center">
         <ThemeToggle />
         {isAuthenticated ? (

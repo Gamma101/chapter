@@ -1,4 +1,5 @@
 "use client"
+import SearchBar from "@/components/SearchBar"
 import { checkBookAndRedirect } from "@/lib/bookUtils"
 import { Book } from "@/types/book"
 import axios from "axios"
@@ -41,12 +42,16 @@ export default function SearchPage() {
   //     }
   //     return <p>{endAuthorsLine}</p>
   //   }
-
+  //bg-[url('/lines-black.svg')] dark:bg-[url('/lines-white.svg')] bg-repeat bg-center
   return (
-    <div className="bg-[url('/lines-black.svg')] dark:bg-[url('/lines-white.svg')] bg-repeat bg-center">
-      <h1 className="text-3xl font-semibold text-center">
-        Results by search: {query}
-      </h1>
+    <div className="flex items-center flex-col">
+      <SearchBar className="w-[30%] mb-5" />
+
+      {query && (
+        <h1 className="text-3xl font-semibold text-center">
+          Results by search: {query}
+        </h1>
+      )}
       <div className="flex justify-center">
         <div className="flex flex-wrap justify-center gap-4 py-10 max-w-[90%]">
           {data
