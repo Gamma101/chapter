@@ -79,12 +79,19 @@ export default function BookPage() {
               </div>
               <div className="w-[50%] flex flex-col gap-5">
                 <h1 className="text-3xl font-bold">{bookInfo.title}</h1>
-                <p className="font-bold text-xl">
-                  Authors:{" "}
-                  <span className="font-normal px-2 rounded-full dark:text-stone-200 dark:bg-stone-600 bg-stone-200 text-stone-600 ">
-                    {bookInfo.authors}
-                  </span>
-                </p>
+                <div className="font-bold text-xl">
+                  <p>Authors: </p>
+                  <div className="flex gap-2">
+                    {bookInfo.authors.split(",").map((author, key) => (
+                      <span
+                        key={key}
+                        className="font-normal px-3 rounded-full dark:text-stone-200 dark:bg-stone-600 bg-stone-200 text-stone-600 "
+                      >
+                        {author}
+                      </span>
+                    ))}
+                  </div>
+                </div>
                 <div>
                   <p className="font-bold text-xl">Description</p>
                   <p>{bookInfo.description}</p>
@@ -113,23 +120,7 @@ export default function BookPage() {
                               <p className="text-2xl font-semibold">
                                 {preview.title}
                               </p>
-                              <p className="">
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                              </p>
+                              <p className="">{preview.content}</p>
                             </div>
                           </div>
                           <div className="flex flex-col items-center justify-between gap-2">

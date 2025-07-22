@@ -6,23 +6,28 @@ import { User } from "lucide-react"
 import { useAuth } from "@/context/AuthContext"
 import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover"
 
-export default function NavbarAccount() {
+export default function NavbarAccount({ className }: { className: string }) {
   const { isAuthenticated, user, logout } = useAuth()
   return (
-    <div className="">
+    <div className={className}>
       <div className="flex gap-5 items-center">
         <ThemeToggle />
         {isAuthenticated ? (
           <Popover>
-            <PopoverTrigger className="p-2 bg-sidebar transition-all duration-100 hover:bg-sidebar-accent border-sidebar-border border-1 rounded-full cursor-pointer">
+            <PopoverTrigger className="p-2 transition-all duration-100 rounded-full cursor-pointer">
               <User className="dark:text-white text-black" />
             </PopoverTrigger>
             <PopoverContent>
               <p>Username: {user?.userName}</p>
               <p>Email: {user?.email}</p>
-              <Button onClick={logout} variant={"destructive"}>
-                Logout
-              </Button>
+              <div className="flex items-center justify-between mt-5 gap-4">
+                <Link href={"/account"}>
+                  <Button variant={"secondary"}>Profile</Button>
+                </Link>
+                <Button onClick={logout} variant={"destructive"}>
+                  Logout
+                </Button>
+              </div>
             </PopoverContent>
           </Popover>
         ) : (

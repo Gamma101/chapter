@@ -1,4 +1,6 @@
 import { Book } from "@/types/book"
+import axios from "axios"
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
 
 const googleAPIKey = process.env.NEXT_PUBLIC_GOOGLE_BOOKS_API_KEY
 
@@ -9,4 +11,19 @@ export const fetchPopularBooksByCategory = async (categoryName: string) => {
   console.log(data.items)
 
   return data.items as Book[]
+}
+
+export const checkBookAndRedirect = async (
+  bookId: string,
+  router: AppRouterInstance
+) => {
+  await axios
+    .get(`http://localhost:5105/api/Books/${bookId}`)
+    .then((data) => {
+      console.log(data.data)
+      router.push(`book/${data.data.id}`)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 }
