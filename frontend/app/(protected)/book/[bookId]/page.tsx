@@ -113,23 +113,7 @@ export default function BookPage() {
                               <p className="text-2xl font-semibold">
                                 {preview.title}
                               </p>
-                              <p className="">
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                                {preview.content}
-                              </p>
+                              <p className="">{preview.content}</p>
                             </div>
                           </div>
                           <div className="flex flex-col items-center justify-between gap-2">
