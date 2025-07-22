@@ -11,7 +11,7 @@ export type Book = {
 
 export type BackendBook = {
   title: string
-  authors: string[]
+  authors: string
   description: string
   thumbnailUrl: string
   publishedDate: string
