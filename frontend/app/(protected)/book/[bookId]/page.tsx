@@ -102,7 +102,13 @@ export default function BookPage() {
                   setReviews={setReviews}
                   bookId={parseInt(bookId)}
                 />
-                {reviews && <BookComments reviews={reviews} />}
+                {reviews && (
+                  <BookComments
+                    setReviews={setReviews}
+                    bookId={bookId}
+                    reviews={reviews}
+                  />
+                )}
               </div>
             </div>
           )}

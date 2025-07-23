@@ -1,34 +1,69 @@
+import { useAuth } from "@/context/AuthContext"
+import { useApi } from "@/hooks/useApi"
 import { Review } from "@/types/book"
-import { ThumbsDown, ThumbsUp, User2 } from "lucide-react"
+import { ThumbsDown, ThumbsUp, Trash2, User2 } from "lucide-react"
 import React from "react"
 
-export default function BookComments({ reviews }: { reviews: Review[] }) {
+export default function BookComments({
+  reviews,
+  bookId,
+  setReviews,
+}: {
+  reviews: Review[]
+  bookId: string
+  setReviews: React.Dispatch<React.SetStateAction<Review[] | null>>
+}) {
+  const api = useApi()
+  const { user } = useAuth()
+
+  const deleteComment = async (reviewId: number) => {
+    await api
+      .delete(`http://localhost:5105/api/books/${bookId}/${reviewId}`)
+      .then((data) => {
+        setReviews((prev) =>
+          prev
+            ? prev.filter((review) => review.createdBy !== data.data.createdBy)
+            : null
+        )
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }
   return (
     <div>
       <p className="text-2xl mb-2 font-bold">Comments</p>
       {reviews && (
         <div className="flex flex-col gap-5">
-          {reviews.map((preview, key) => {
+          {reviews.map((review, key) => {
             return (
               <div
                 key={key}
                 className="flex gap-10 bg-secondary rounded-lg p-5 justify-between items-center"
               >
-                <div className="flex flex-row gap-5">
+                <div className="flex flex-row items-center gap-5">
+                  {user?.userName === review.createdBy && (
+                    <Trash2
+                      onClick={() => {
+                        deleteComment(review.id)
+                      }}
+                      className="text-red-400 cursor-pointer"
+                    />
+                  )}
                   <div className="flex items-center flex-col">
                     <div className="dark:bg-stone-400 bg-stone-300 rounded-full p-2">
                       <User2 className=" rounded-full" />
                     </div>
                     <p>
-                      {preview.createdBy.length > 8
-                        ? preview.createdBy.slice(0, 8) + "..."
-                        : preview.createdBy}
+                      {review.createdBy.length > 8
+                        ? review.createdBy.slice(0, 8) + "..."
+                        : review.createdBy}
                     </p>
                   </div>
 
                   <div className="wrap-anywhere">
-                    <p className="text-2xl font-semibold">{preview.title}</p>
-                    <p className="">{preview.content}</p>
+                    <p className="text-2xl font-semibold">{review.title}</p>
+                    <p className="">{review.content}</p>
                   </div>
                 </div>
                 <div className="flex flex-col items-center justify-between gap-2">
