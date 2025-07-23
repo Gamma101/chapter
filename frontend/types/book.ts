@@ -19,6 +19,7 @@ export type BackendBook = {
 }
 
 export type Review = {
+  id: number
   title: string
   content: string
   createdAt: string
