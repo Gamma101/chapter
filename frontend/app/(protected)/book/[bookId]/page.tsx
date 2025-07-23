@@ -2,7 +2,7 @@
 
 import BookComments from "@/components/BookComments"
 import BookPageSkeleton from "@/components/BookPageSkeleton"
-import { Input } from "@/components/ui/input"
+import UserCommentForm from "@/components/UserCommentForm"
 import { BackendBook, Review } from "@/types/book"
 import axios from "axios"
 import { Star } from "lucide-react"
@@ -98,6 +98,10 @@ export default function BookPage() {
                   <p className="font-bold text-xl">Description</p>
                   <p>{bookInfo.description.replace(/<[^>]*>/g, "")}</p>
                 </div>
+                <UserCommentForm
+                  setReviews={setReviews}
+                  bookId={parseInt(bookId)}
+                />
                 {reviews && <BookComments reviews={reviews} />}
               </div>
             </div>
