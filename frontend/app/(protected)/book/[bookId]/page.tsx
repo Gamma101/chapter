@@ -60,7 +60,7 @@ export default function BookPage() {
               <div className="flex items-center flex-col">
                 <Image
                   alt="book"
-                  src={bookInfo.thumbnailUrl}
+                  src={bookInfo.thumbnailUrl as string}
                   width={300}
                   height={500}
                   unoptimized
@@ -94,7 +94,7 @@ export default function BookPage() {
                 </div>
                 <div>
                   <p className="font-bold text-xl">Description</p>
-                  <p>{bookInfo.description}</p>
+                  <p>{bookInfo.description.replace(/<[^>]*>/g, "")}</p>
                 </div>
                 {reviews && (
                   <div className="flex flex-col gap-5">
