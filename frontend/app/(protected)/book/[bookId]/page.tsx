@@ -23,12 +23,10 @@ export default function BookPage() {
       await axios
         .get(`http://localhost:5105/api/Books/${bookId}`)
         .then((data) => {
-          console.log(data.data)
           setBookInfo(data.data)
           setIsLoading(false)
         })
-        .catch((error) => {
-          console.log(error)
+        .finally(() => {
           setIsLoading(false)
         })
     }
@@ -41,12 +39,9 @@ export default function BookPage() {
       await axios
         .get(`http://localhost:5105/api/books/${bookId}/reviews`)
         .then((data) => {
-          console.log(data.data)
           setReviews(data.data)
         })
-        .catch((error) => {
-          console.log(error)
-        })
+        .catch(() => {})
     }
     parseBookReviews()
   }, [bookId])

@@ -1,10 +1,10 @@
 import { Label } from "@radix-ui/react-dropdown-menu"
 import { Input } from "./ui/input"
 import { Textarea } from "./ui/textarea"
-import { Button } from "./ui/button"
 import React, { useState } from "react"
 import { useApi } from "@/hooks/useApi"
 import { Review } from "@/types/book"
+import LoadingButton from "./LoadingButton"
 
 export default function UserCommentForm({
   bookId,
@@ -16,8 +16,10 @@ export default function UserCommentForm({
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   const api = useApi()
+  const [isLoading, setIsLoading] = useState(false)
 
   const submitComment = async () => {
+    setIsLoading(true)
     await api
       .post(`http://localhost:5105/api/books/${bookId}/reviews`, {
         title,
@@ -31,6 +33,7 @@ export default function UserCommentForm({
       .catch((e) => {
         console.log(e)
       })
+      .finally(() => setIsLoading(false))
   }
 
   return (
@@ -57,9 +60,13 @@ export default function UserCommentForm({
             />
           </Label>
 
-          <Button onClick={submitComment} className="w-1/2 self-center">
+          <LoadingButton
+            isLoading={isLoading}
+            onClick={submitComment}
+            className="w-1/2 self-center"
+          >
             Submit
-          </Button>
+          </LoadingButton>
         </div>
       </div>
     </div>

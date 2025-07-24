@@ -8,7 +8,6 @@ export const fetchPopularBooksByCategory = async (categoryName: string) => {
   const url = `https://www.googleapis.com/books/v1/volumes?q=subject:${categoryName}&maxResults=10&key=${googleAPIKey}`
   const response = await fetch(url)
   const data = await response.json()
-  console.log(data.items)
 
   return data.items as Book[]
 }
@@ -20,7 +19,6 @@ export const checkBookAndRedirect = async (
   await axios
     .get(`http://localhost:5105/api/Books/${bookId}`)
     .then((data) => {
-      console.log(data.data)
       router.push(`book/${data.data.id}`)
     })
     .catch((error) => {
