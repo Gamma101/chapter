@@ -4,6 +4,8 @@ import SearchBooksShelf from "@/components/SearchBooksShelf"
 import { Book } from "@/types/book"
 import axios from "axios"
 import { LucideLoaderPinwheel } from "lucide-react"
+import { useTheme } from "next-themes"
+import Image from "next/image"
 import { useSearchParams } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
@@ -13,6 +15,7 @@ export default function SearchPage() {
   const googleAPIKey = process.env.NEXT_PUBLIC_GOOGLE_BOOKS_API_KEY
   const [data, setData] = useState<Book[] | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const theme = useTheme()
 
   useEffect(() => {
     const fetchBooksByQuery = async () => {
@@ -44,16 +47,43 @@ export default function SearchPage() {
       )}
       <div className="flex justify-center">
         {isLoading ? (
-          <div className="h-[50vh] flex items-center justify-center">
+          <div className="h-[50vh] mt-10 flex items-center justify-center">
             <LucideLoaderPinwheel className="animate-spin" size={60} />
           </div>
         ) : data ? (
           <SearchBooksShelf data={data} />
         ) : (
-          <div className="h-100px mt-50">
-            <p className="text-3xl font-bold">
-              {query ? "No books found :(" : "Find the book you like!"}
-            </p>
+          <div className="">
+            <div className="flex items-center justify-center flex-col mt-20">
+              {query ? (
+                <Image
+                  width={100}
+                  height={100}
+                  alt="search"
+                  className="w-100 h-100"
+                  src={
+                    theme.theme === "light"
+                      ? "/empty-white.svg"
+                      : "empty-dark.svg"
+                  }
+                />
+              ) : (
+                <Image
+                  width={100}
+                  height={100}
+                  alt="search"
+                  className="w-120 h-120"
+                  src={
+                    theme.theme === "light"
+                      ? "/search-white.svg"
+                      : "search-dark.svg"
+                  }
+                />
+              )}
+              <p className="text-4xl">
+                {query ? "No books found :(" : "Find the book you like!"}
+              </p>
+            </div>
           </div>
         )}
       </div>
