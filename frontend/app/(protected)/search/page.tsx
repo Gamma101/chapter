@@ -10,11 +10,9 @@ import React, { useEffect, useState } from "react"
 export default function SearchPage() {
   const searchParams = useSearchParams()
   const query = searchParams.get("q")
-  console.log(query)
   const googleAPIKey = process.env.NEXT_PUBLIC_GOOGLE_BOOKS_API_KEY
   const [data, setData] = useState<Book[] | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-  console.log(isLoading)
 
   useEffect(() => {
     const fetchBooksByQuery = async () => {
@@ -27,7 +25,6 @@ export default function SearchPage() {
         await axios
           .get(url)
           .then((response) => {
-            console.log(response.data.items)
             setData(response.data.items)
           })
           .finally(() => setIsLoading(false))
