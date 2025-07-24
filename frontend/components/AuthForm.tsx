@@ -1,11 +1,11 @@
 import React, { useState } from "react"
 import { Input } from "./ui/input"
-import { Button } from "./ui/button"
 import axios from "axios"
 import Link from "next/link"
 import { useAuth } from "@/context/AuthContext"
 import { Loader } from "lucide-react"
 import { useRouter } from "next/navigation"
+import LoadingButton from "./LoadingButton"
 
 export default function AuthForm({ isSignUp }: { isSignUp: boolean }) {
   const [error, setError] = useState<string>("")
@@ -135,9 +135,9 @@ export default function AuthForm({ isSignUp }: { isSignUp: boolean }) {
             />
           </div>
 
-          <Button className="font-semibold py-5">
+          <LoadingButton isLoading={isLoading} className="font-semibold py-5">
             {isLoading ? <Loader /> : isSignUp ? "Register" : "Login"}
-          </Button>
+          </LoadingButton>
         </form>
         <p className="mt-2 text-center">
           {isSignUp
