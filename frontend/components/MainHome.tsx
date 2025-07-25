@@ -26,7 +26,7 @@ export default function MainHome() {
             width={500}
             height={200}
             src={"/main-books.png"}
-            className="w-auto h-auto "
+            className="w-150"
             alt="3 books"
           />
         </div>
