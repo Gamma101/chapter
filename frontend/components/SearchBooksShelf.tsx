@@ -6,6 +6,13 @@ import { useRouter } from "next/navigation"
 
 export default function SearchBooksShelf({ data }: { data: Book[] }) {
   const router = useRouter()
+  const shortenAuthors = (authors: string[]) => {
+    if (!authors || authors.length === 0) return "Unknown author"
+    return authors[0].length > 15
+      ? authors[0].slice(0, 15).trim() + "..."
+      : authors[0]
+  }
+  console.log(data)
   return (
     <div className="flex flex-wrap justify-center gap-4 py-10 max-w-[90%]">
       {data.map((book, key) => {
@@ -16,7 +23,7 @@ export default function SearchBooksShelf({ data }: { data: Book[] }) {
           <div
             key={key}
             onClick={() => checkBookAndRedirect(book.id, router)}
-            className="w-[200px] mb-8 flex flex-col items-center"
+            className="w-[200px] mb-8 flex flex-col items-center cursor-pointer"
           >
             <div className="relative h-[250px] w-[180px]">
               <Image
@@ -31,6 +38,11 @@ export default function SearchBooksShelf({ data }: { data: Book[] }) {
             </div>
             <div className="mt-2 w-full text-center">
               <p className="font-bold truncate px-2">{book.volumeInfo.title}</p>
+              {book.volumeInfo.authors ? (
+                <p>{shortenAuthors(book.volumeInfo?.authors)}</p>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         )
