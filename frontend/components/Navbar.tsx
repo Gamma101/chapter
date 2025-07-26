@@ -20,7 +20,12 @@ export default function Navbar({ className = "" }: { className?: string }) {
       <div className="flex gap-5 justify-self-center">
         <Link
           href={"/search"}
-          className={cn("text-xl", currentPage === "search" ? "font-bold" : "")}
+          className={cn(
+            "text-xl",
+            currentPage === "search"
+              ? "font-bold text-white dark:text-black px-2 bg-secondary-foreground  rounded-full transition-all"
+              : ""
+          )}
         >
           search
         </Link>
@@ -28,7 +33,9 @@ export default function Navbar({ className = "" }: { className?: string }) {
           href="/collection"
           className={cn(
             "text-xl",
-            currentPage === "collection" ? "font-bold" : ""
+            currentPage === "collection"
+              ? "font-bold text-white dark:text-black px-2 bg-secondary-foreground  rounded-full transition-all"
+              : ""
           )}
         >
           collection

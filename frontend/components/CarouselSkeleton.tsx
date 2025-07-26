@@ -1,4 +1,4 @@
-import React from "react"
+import { motion } from "motion/react"
 
 export default function CarouselSkeleton({
   categoryName,
@@ -13,7 +13,9 @@ export default function CarouselSkeleton({
         {Array(5)
           .fill(0)
           .map((_, i) => (
-            <div
+            <motion.div
+              initial={{ opacity: 0.1 }}
+              animate={{ opacity: 1, transition: { duration: 1 } }}
               key={i}
               role="status"
               className="max-w-sm animate-pulse flex gap-5 flex-col"
@@ -33,7 +35,7 @@ export default function CarouselSkeleton({
                 <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 mb-4"></div>
                 <div className="h-2.5 bg-gray-200 rounded-full w-[50%] dark:bg-gray-700 mb-4"></div>
               </div>
-            </div>
+            </motion.div>
           ))}
       </div>
     </div>
