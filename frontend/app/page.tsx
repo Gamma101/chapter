@@ -1,3 +1,4 @@
+"use client"
 import MainHome from "@/components/MainHome"
 import Navbar from "@/components/Navbar"
 import PopularCatalog from "@/components/PopularCatalog"
