@@ -1,9 +1,11 @@
 "use client"
 import React, { useEffect, useState } from "react"
+import { motion } from "motion/react"
 import { fetchPopularBooksByCategory } from "@/lib/bookUtils"
 import { Book } from "@/types/book"
 import BooksCarousel from "./BooksCarousel"
 import CarouselSkeleton from "./CarouselSkeleton"
+
 const categories = ["fantasy", "drama", "comedy"]
 
 export default function PopularCatalog() {
@@ -41,11 +43,17 @@ export default function PopularCatalog() {
         const categoryUpperCase =
           category.charAt(0).toUpperCase() + category.slice(1, category.length)
         return !isLoading ? (
-          <BooksCarousel
+          <motion.div
+            initial={{ opacity: 0.1, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1, transition: { duration: 1 } }}
             key={category}
-            innerBooks={booksByCategories[category]}
-            carouselName={categoryUpperCase}
-          />
+            className="flex items-center justify-center w-full"
+          >
+            <BooksCarousel
+              innerBooks={booksByCategories[category]}
+              carouselName={categoryUpperCase}
+            />
+          </motion.div>
         ) : (
           <CarouselSkeleton key={index} categoryName={categoryUpperCase} />
         )
