@@ -64,7 +64,7 @@ export default function SearchPage() {
                   src={
                     theme.theme === "light"
                       ? "/empty-white.svg"
-                      : "empty-dark.svg"
+                      : "/empty-dark.svg"
                   }
                 />
               ) : (

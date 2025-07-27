@@ -19,11 +19,22 @@ export default function Navbar({ className = "" }: { className?: string }) {
 
       <div className="flex gap-5 justify-self-center">
         <Link
+          href={"/"}
+          className={cn(
+            "text-xl",
+            currentPage === ""
+              ? "text-white dark:text-black px-2 bg-secondary-foreground  rounded-full transition-all"
+              : ""
+          )}
+        >
+          home
+        </Link>
+        <Link
           href={"/search"}
           className={cn(
             "text-xl",
             currentPage === "search"
-              ? "font-bold text-white dark:text-black px-2 bg-secondary-foreground  rounded-full transition-all"
+              ? "text-white dark:text-black px-2 bg-secondary-foreground  rounded-full transition-all"
               : ""
           )}
         >
@@ -34,11 +45,22 @@ export default function Navbar({ className = "" }: { className?: string }) {
           className={cn(
             "text-xl",
             currentPage === "collection"
-              ? "font-bold text-white dark:text-black px-2 bg-secondary-foreground  rounded-full transition-all"
+              ? "text-white dark:text-black px-2 bg-secondary-foreground  rounded-full transition-all"
               : ""
           )}
         >
           collection
+        </Link>
+        <Link
+          href="/reviews"
+          className={cn(
+            "text-xl",
+            currentPage === "reviews"
+              ? "text-white dark:text-black px-2 bg-secondary-foreground  rounded-full transition-all"
+              : ""
+          )}
+        >
+          reviews
         </Link>
       </div>
 

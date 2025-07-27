@@ -2,7 +2,14 @@ import React from "react"
 import ThemeToggle from "./ThemeToggle"
 import Link from "next/link"
 import { Button } from "./ui/button"
-import { User } from "lucide-react"
+import {
+  FileStack,
+  LogOut,
+  PenBox,
+  Settings2Icon,
+  User,
+  UserCheck2,
+} from "lucide-react"
 import { useAuth } from "@/context/AuthContext"
 import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover"
 
@@ -14,19 +21,56 @@ export default function NavbarAccount({ className }: { className: string }) {
         <ThemeToggle />
         {isAuthenticated ? (
           <Popover>
-            <PopoverTrigger className="p-2 transition-all duration-100 rounded-full cursor-pointer">
-              <User className="dark:text-white text-black" />
+            <PopoverTrigger>
+              <div className="p-2 transition-all duration-300 dark:bg-white bg-black hover:opacity-80 rounded-full cursor-pointer">
+                <User className="dark:text-black text-white" />
+              </div>
             </PopoverTrigger>
-            <PopoverContent>
-              <p>Username: {user?.userName}</p>
-              <p>Email: {user?.email}</p>
-              <div className="flex items-center justify-between mt-5 gap-4">
-                <Link href={"/account"}>
-                  <Button variant={"secondary"}>Profile</Button>
+            <PopoverContent className="flex flex-col item-center justify-center text-center">
+              <div className="flex items-center rounded-lg gap-2 py-2 mb-2">
+                <div className="self-center">
+                  <User size={40} className="" />
+                </div>
+                <div className="text-left">
+                  <p className="text-md">{user?.userName}</p>
+                  <p className="text-md">{user?.email}</p>
+                </div>
+              </div>
+              <div className="flex flex-col items-start gap-2">
+                <Link className="w-full" href={"/account"}>
+                  <Button variant={"secondary"} className="w-full self-center">
+                    <UserCheck2 />
+                    <p className="text-left w-full">My Profile</p>
+                  </Button>
                 </Link>
-                <Button onClick={logout} variant={"destructive"}>
-                  Logout
-                </Button>
+                <Link className="w-full" href={"/collection"}>
+                  <Button variant={"secondary"} className="w-full self-center">
+                    <FileStack />
+                    <p className="text-left w-full">My Collection</p>
+                  </Button>
+                </Link>
+                <Link className="w-full" href={"/reviews"}>
+                  <Button variant={"secondary"} className="w-full self-center">
+                    <PenBox />
+                    <p className="text-left w-full">My Reviews</p>
+                  </Button>
+                </Link>
+                <div className="flex justify-between w-full ">
+                  <Link className="w-[48%]" href={"/settings"}>
+                    <Button variant={"secondary"} className="w-full">
+                      <Settings2Icon />
+                      <p className="w-full">Settings</p>
+                    </Button>
+                  </Link>
+                  <Button
+                    onClick={logout}
+                    variant={"destructive"}
+                    className="w-[48%]"
+                  >
+                    <LogOut />
+                    <p className="w-full">Settings</p>
+                  </Button>
+                </div>
               </div>
             </PopoverContent>
           </Popover>
