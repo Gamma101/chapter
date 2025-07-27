@@ -14,8 +14,10 @@ export default function NavbarAccount({ className }: { className: string }) {
         <ThemeToggle />
         {isAuthenticated ? (
           <Popover>
-            <PopoverTrigger className="p-2 transition-all duration-100 rounded-full cursor-pointer">
-              <User className="dark:text-white text-black" />
+            <PopoverTrigger>
+              <div className="p-2 transition-all duration-300 dark:bg-white bg-black hover:opacity-80 rounded-full cursor-pointer">
+                <User className="dark:text-black text-white" />
+              </div>
             </PopoverTrigger>
             <PopoverContent>
               <p>Username: {user?.userName}</p>
