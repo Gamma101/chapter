@@ -19,6 +19,17 @@ export default function Navbar({ className = "" }: { className?: string }) {
 
       <div className="flex gap-5 justify-self-center">
         <Link
+          href={"/"}
+          className={cn(
+            "text-xl",
+            currentPage === ""
+              ? "font-bold text-white dark:text-black px-2 bg-secondary-foreground  rounded-full transition-all"
+              : ""
+          )}
+        >
+          home
+        </Link>
+        <Link
           href={"/search"}
           className={cn(
             "text-xl",
@@ -39,6 +50,17 @@ export default function Navbar({ className = "" }: { className?: string }) {
           )}
         >
           collection
+        </Link>
+        <Link
+          href="/reviews"
+          className={cn(
+            "text-xl",
+            currentPage === "reviews"
+              ? "font-bold text-white dark:text-black px-2 bg-secondary-foreground  rounded-full transition-all"
+              : ""
+          )}
+        >
+          reviews
         </Link>
       </div>
 
