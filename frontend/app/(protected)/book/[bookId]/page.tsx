@@ -1,11 +1,11 @@
 "use client"
-
 import BookComments from "@/components/BookComments"
 import BookPageSkeleton from "@/components/BookPageSkeleton"
 import UserCommentForm from "@/components/UserCommentForm"
 import { BackendBook, Review } from "@/types/book"
 import axios from "axios"
 import { Star } from "lucide-react"
+import { useTheme } from "next-themes"
 import Image from "next/image"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -16,6 +16,7 @@ export default function BookPage() {
   const [bookInfo, setBookInfo] = useState<BackendBook | null>(null)
   const [reviews, setReviews] = useState<Review[] | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const theme = useTheme()
 
   // Parse book information
   useEffect(() => {
@@ -97,13 +98,33 @@ export default function BookPage() {
                   setReviews={setReviews}
                   bookId={parseInt(bookId)}
                 />
-                {reviews && (
-                  <BookComments
-                    setReviews={setReviews}
-                    bookId={bookId}
-                    reviews={reviews}
-                  />
-                )}
+                <div className="mb-20">
+                  <p className="text-2xl mb-1 font-bold">Comments</p>
+                  {reviews ? (
+                    <BookComments
+                      setReviews={setReviews}
+                      bookId={bookId}
+                      reviews={reviews}
+                    />
+                  ) : (
+                    <div className="bg-secondary gap-3 p-4 flex flex-col items-center justify-center rounded-lg">
+                      <Image
+                        width={50}
+                        height={50}
+                        alt="empty"
+                        className="w-75 h-75"
+                        src={
+                          theme.theme === "light"
+                            ? "/empty-white.svg"
+                            : "/empty-dark.svg"
+                        }
+                      />
+                      <p className="text-2xl">
+                        Be the first one to leave a review!
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           )}

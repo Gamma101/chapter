@@ -2,7 +2,7 @@ import { useAuth } from "@/context/AuthContext"
 import { useApi } from "@/hooks/useApi"
 import { Review } from "@/types/book"
 import { ThumbsDown, ThumbsUp, Trash2, User2 } from "lucide-react"
-import React from "react"
+import EditCommentDialog from "./EditCommentDialog"
 
 export default function BookComments({
   reviews,
@@ -30,9 +30,9 @@ export default function BookComments({
         console.log(e)
       })
   }
+
   return (
     <div>
-      <p className="text-2xl mb-2 font-bold">Comments</p>
       {reviews && (
         <div className="flex flex-col gap-5">
           {reviews.map((review, key) => {
@@ -43,12 +43,15 @@ export default function BookComments({
               >
                 <div className="flex flex-row items-center gap-5">
                   {user?.userName === review.createdBy && (
-                    <Trash2
-                      onClick={() => {
-                        deleteComment(review.id)
-                      }}
-                      className="text-red-400 cursor-pointer"
-                    />
+                    <div className="flex flex-col gap-5">
+                      <EditCommentDialog review={review} />
+                      <Trash2
+                        onClick={() => {
+                          deleteComment(review.id)
+                        }}
+                        className="text-red-400 cursor-pointer"
+                      />
+                    </div>
                   )}
                   <div className="flex items-center flex-col">
                     <div className="dark:bg-stone-400 bg-stone-300 rounded-full p-2">

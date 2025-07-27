@@ -23,7 +23,7 @@ export default function Navbar({ className = "" }: { className?: string }) {
           className={cn(
             "text-xl",
             currentPage === ""
-              ? "font-bold text-white dark:text-black px-2 bg-secondary-foreground  rounded-full transition-all"
+              ? "text-white dark:text-black px-2 bg-secondary-foreground  rounded-full transition-all"
               : ""
           )}
         >
@@ -34,7 +34,7 @@ export default function Navbar({ className = "" }: { className?: string }) {
           className={cn(
             "text-xl",
             currentPage === "search"
-              ? "font-bold text-white dark:text-black px-2 bg-secondary-foreground  rounded-full transition-all"
+              ? "text-white dark:text-black px-2 bg-secondary-foreground  rounded-full transition-all"
               : ""
           )}
         >
@@ -45,7 +45,7 @@ export default function Navbar({ className = "" }: { className?: string }) {
           className={cn(
             "text-xl",
             currentPage === "collection"
-              ? "font-bold text-white dark:text-black px-2 bg-secondary-foreground  rounded-full transition-all"
+              ? "text-white dark:text-black px-2 bg-secondary-foreground  rounded-full transition-all"
               : ""
           )}
         >
@@ -56,7 +56,7 @@ export default function Navbar({ className = "" }: { className?: string }) {
           className={cn(
             "text-xl",
             currentPage === "reviews"
-              ? "font-bold text-white dark:text-black px-2 bg-secondary-foreground  rounded-full transition-all"
+              ? "text-white dark:text-black px-2 bg-secondary-foreground  rounded-full transition-all"
               : ""
           )}
         >
