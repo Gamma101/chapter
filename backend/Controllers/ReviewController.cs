@@ -45,7 +45,7 @@ namespace backend.Controllers
             if (reviewFromDb.UserId != appUser.Id) { return Forbid(); }
 
             var reviewModel = await _reviewRepo.DeleteAsync(reviewId);
-            if (reviewModel == false) { return NotFound("Review is not found for this book."); }
+            if (reviewModel == null) { return NotFound("Review is not found for this book."); }
             return NoContent();
 
         }
