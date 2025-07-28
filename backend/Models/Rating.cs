@@ -10,7 +10,7 @@ namespace Chapter.Models
         public int Id { get; set; }
         public string UserId { get; set; } = string.Empty;
         public virtual AppUser User { get; set; }
-        public int BookId { get; set; }
+        public string BookId { get; set; }
         public virtual Book Book { get; set; }
         public int Value { get; set; }
 

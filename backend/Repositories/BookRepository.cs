@@ -13,14 +13,36 @@ namespace backend.Repositories
             _dbContext = dBContext;
 
         }
-        public Task<bool> BookExist(int id)
+        public Task<bool> BookExist(string id)
         {
             return _dbContext.Books.AnyAsync(x => x.Id == id);
         }
 
-        public async Task<Book?> GetByIdAsync(int id)
+        public async Task<Book?> GetByIdAsync(string id)
         {
             return await _dbContext.Books.FirstOrDefaultAsync(b => b.Id == id);
+        }
+
+        public DateOnly GetDateOnlyAsync(List<int> date)
+        {
+            if (date != null & date.Count != 0)
+            {
+                DateOnly now = new DateOnly();
+                if (date.Count == 1)
+                {
+                    now = new DateOnly(date[0], 1, 1);
+                }
+                else if (date.Count == 2)
+                {
+                    now = new DateOnly(date[0], date[1], 1);
+                }
+                else if (date.Count == 3)
+                {
+                    now = new DateOnly(date[0], date[1], date[2]);
+                }
+                return now;
+            }
+            else { return new DateOnly(); }
         }
     }
 }

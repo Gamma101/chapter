@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
 {
-    [Route("api/books/{bookId:int}/review")]
+    [Route("api/books/{bookId}/review")]
     [ApiController]
     public class BookReviewController : ControllerBase
     {
@@ -23,7 +23,7 @@ namespace backend.Controllers
             _bookRepo = bookRepo;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllByBookId(int bookId)
+        public async Task<IActionResult> GetAllByBookId(string bookId)
         {
             if (!ModelState.IsValid) { return BadRequest(ModelState); }
             var reviews = await _reviewRepo.GetAllByBookIdAsync(bookId);
@@ -35,7 +35,7 @@ namespace backend.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Create([FromRoute] int bookId, [FromBody] CreateReviewDto reviewDto)
+        public async Task<IActionResult> Create([FromRoute] string bookId, [FromBody] CreateReviewDto reviewDto)
         {
             if (!ModelState.IsValid) { return BadRequest(ModelState); }
             if (!await _bookRepo.BookExist(bookId))
@@ -52,7 +52,7 @@ namespace backend.Controllers
         }
         [HttpPut("{reviewId:int}")]
         [Authorize]
-        public async Task<IActionResult> Update([FromRoute] int bookId, [FromRoute] int reviewId, [FromBody] UpdateReviewRequestDto reviewRequestDto)
+        public async Task<IActionResult> Update([FromRoute] string bookId, [FromRoute] int reviewId, [FromBody] UpdateReviewRequestDto reviewRequestDto)
         {
             if (!ModelState.IsValid) { return BadRequest(ModelState); }
             var username = User.GetUsername();

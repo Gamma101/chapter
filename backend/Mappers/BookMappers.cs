@@ -9,7 +9,7 @@ namespace backend.Mappers
         {
             return new BookDto
             {
-                GoogleBookId = bookModel.GoogleBookId,
+                Id = bookModel.Id,
 
             };
         }
