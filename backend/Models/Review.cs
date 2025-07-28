@@ -10,11 +10,12 @@ namespace Chapter.Models
         public int Id { get;  set; }
         public string UserId { get; set; } = string.Empty;
         public virtual AppUser User { get; set; }
-        public int BookId { get; set; } 
+        public string BookId { get; set; } 
         public virtual Book Book { get; set; }
         public string Title { get;  set; } = string.Empty;
         public string Content { get;  set; } = string.Empty;
         public DateTime CreatedAt { get;  set; }
+        public DateTime? UpdatedAt { get; set; }
 
     }
     

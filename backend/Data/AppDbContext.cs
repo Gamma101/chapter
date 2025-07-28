@@ -42,9 +42,6 @@ namespace Chapter.Data
             builder.Entity<Book>(entity =>
             {
                 entity.HasKey(b => b.Id);
-
-                entity.HasIndex(b => b.GoogleBookId)
-                .IsUnique();
             });
                 
             

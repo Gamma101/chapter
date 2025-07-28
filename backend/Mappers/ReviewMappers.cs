@@ -13,10 +13,11 @@ namespace backend.Mappers
                 Title = reviewModel.Title,
                 Content = reviewModel.Content,
                 CreatedAt = reviewModel.CreatedAt,
+                UpdatedAt = reviewModel?.UpdatedAt,
                 CreatedBy = reviewModel.User.UserName
             };
         }
-        public static Review ToReviewFromCreate(this CreateReviewDto createReviewDto, int bookId)
+        public static Review ToReviewFromCreate(this CreateReviewDto createReviewDto, string bookId)
         {
             return new Review
             {
@@ -33,7 +34,7 @@ namespace backend.Mappers
             {
                 Title = updateReviewDto.Title,
                 Content = updateReviewDto.Content,
-                CreatedAt = DateTime.UtcNow
+                UpdatedAt = DateTime.UtcNow
             };
         }
     }

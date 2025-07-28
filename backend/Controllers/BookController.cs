@@ -30,21 +30,27 @@ namespace backend.Controllers
             {
                 return BadRequest("Google Book ID cannot be empty.");
             }
-            var bookEntity = await _dbContext.Books.FirstOrDefaultAsync(b => b.GoogleBookId == googleBookId);
+            var bookEntity = await _dbContext.Books.FirstOrDefaultAsync(b => b.Id == googleBookId);
             if (bookEntity == null)
             {
                 var googleBook = await _googleBooksService.GetByGoogleIdAsync(googleBookId);
                 if (googleBook == null || googleBook.VolumeInfo == null) { return NotFound("The book was not found."); }
 
-
+                List<int> date = googleBook.VolumeInfo.PublishedDate.Split('-').Select(int.Parse).ToList();
+                var publishedDate = _bookRepo.GetDateOnlyAsync(date);
+                
+               
                 bookEntity = new Chapter.Models.Book
                 {
-                    
-                    GoogleBookId = googleBook.Id,
+
+                    Id = googleBook.Id,
                     Title = googleBook.VolumeInfo.Title ?? "No Title",
                     Authors = googleBook.VolumeInfo.Authors != null ? string.Join(",", googleBook.VolumeInfo.Authors) : "Unknown Author",
                     Description = googleBook.VolumeInfo.Description ?? "No description available.",
-                    ThumbnailUrl = googleBook.VolumeInfo.ImageLinks?.Thumbnail ?? ""
+                    ThumbnailUrl = googleBook.VolumeInfo.ImageLinks?.Thumbnail ?? "",
+                    PublishedDate = publishedDate == new DateOnly() ? null : publishedDate,
+                    PageCount = googleBook.VolumeInfo.PageCount != null ? googleBook.VolumeInfo.PageCount : 0
+
                 };
                 _dbContext.Books.Add(bookEntity);
                 await _dbContext.SaveChangesAsync();
@@ -54,18 +60,20 @@ namespace backend.Controllers
             var bookDto = new BookDto
             {
                 Id = bookEntity.Id,
-                GoogleBookId = bookEntity.GoogleBookId,
                 Title = bookEntity.Title,
                 Authors = bookEntity.Authors,
                 Description = bookEntity.Description,
-                ThumbnailUrl = bookEntity.ThumbnailUrl
+                ThumbnailUrl = bookEntity.ThumbnailUrl,
+                PublishedDate = bookEntity.PublishedDate,
+                PageCount = bookEntity.PageCount
+
             };
         
             return Ok(bookDto);
             
         }
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] string id)
         {
             if(!ModelState.IsValid) { return BadRequest(); }
             var book = await _bookRepo.GetByIdAsync(id);
