@@ -46,13 +46,13 @@ namespace backend.Repositories
 
         }
 
-        public async Task<Review> DeleteAsync(int bookId, int reviewId)
+        public async Task<bool> DeleteAsync(int reviewId)
         {
-            var reviewModel = await _dbContext.Reviews.FirstOrDefaultAsync(r => r.Id == reviewId && r.BookId == bookId);
-            if (reviewModel == null) { return null; }
+            var reviewModel = await _dbContext.Reviews.FirstOrDefaultAsync(r => r.Id == reviewId);
+            if (reviewModel == null) { return false; }
             _dbContext.Reviews.Remove(reviewModel);
             await _dbContext.SaveChangesAsync();
-            return reviewModel;
+            return true;
             
         }
 

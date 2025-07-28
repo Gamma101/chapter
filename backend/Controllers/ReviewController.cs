@@ -1,6 +1,8 @@
-﻿using backend.Interfaces;
+﻿using backend.Extensions;
+using backend.Interfaces;
 using backend.Mappers;
 using backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,12 +14,10 @@ namespace backend.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IReviewRepository _reviewRepo;
-        private readonly IBookRepository _bookRepo;
-        public ReviewController(UserManager<AppUser> userManager, IReviewRepository reviewRepo, IBookRepository bookRepo)
+        public ReviewController(UserManager<AppUser> userManager, IReviewRepository reviewRepo)
         {
             _userManager = userManager;
             _reviewRepo = reviewRepo;
-            _bookRepo = bookRepo;
         }
         [HttpGet("{reviewId:int}", Name = "GetReviewById")]
         public async Task<IActionResult> GetById([FromRoute] int reviewId)
@@ -29,6 +29,25 @@ namespace backend.Controllers
                 return NotFound("Review is not found for this book.");
             }
             return Ok(review.ToReviewDto());
+        }
+        [HttpDelete("{reviewId:int}")]
+        [Authorize]
+        public async Task<IActionResult> Delete([FromRoute] int reviewId)
+        {
+            var username = User.GetUsername();
+            var appUser = await _userManager.FindByNameAsync(username);
+            var reviewFromDb = await _reviewRepo.GetByIdAsync(reviewId);
+            if(reviewFromDb == null)
+            {
+                return NotFound("Review is not found for this book.");
+            }
+
+            if (reviewFromDb.UserId != appUser.Id) { return Forbid(); }
+
+            var reviewModel = await _reviewRepo.DeleteAsync(reviewId);
+            if (reviewModel == false) { return NotFound("Review is not found for this book."); }
+            return NoContent();
+
         }
     }
 }
