@@ -9,6 +9,7 @@ namespace backend.Mappers
         {
             return new ReviewDto
             {
+                Id = reviewModel.Id,
                 Title = reviewModel.Title,
                 Content = reviewModel.Content,
                 CreatedAt = reviewModel.CreatedAt,
