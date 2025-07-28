@@ -21,7 +21,7 @@ export default function UserCommentForm({
   const submitComment = async () => {
     setIsLoading(true)
     await api
-      .post(`http://localhost:5105/api/books/${bookId}/reviews`, {
+      .post(`http://localhost:5105/api/books/${bookId}/review`, {
         title,
         content,
       })
