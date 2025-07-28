@@ -48,7 +48,7 @@ namespace backend.Controllers
             var reviewModel = reviewDto.ToReviewFromCreate(bookId);
             reviewModel.UserId = appUser.Id.ToString();
             await _reviewRepo.CreateAsync(reviewModel);
-            return CreatedAtAction(nameof(ReviewController.GetById), new { bookId, reviewId = reviewModel.Id }, reviewModel.ToReviewDto());
+            return CreatedAtRoute("GetReviewById", new { reviewId = reviewModel.Id }, reviewModel.ToReviewDto());
         }
         [HttpPut("{reviewId:int}")]
         [Authorize]
