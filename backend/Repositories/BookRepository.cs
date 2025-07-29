@@ -18,10 +18,6 @@ namespace backend.Repositories
             return _dbContext.Books.AnyAsync(x => x.Id == id);
         }
 
-        public async Task<Book?> GetByIdAsync(string id)
-        {
-            return await _dbContext.Books.FirstOrDefaultAsync(b => b.Id == id);
-        }
 
         public DateOnly GetDateOnlyAsync(List<int> date)
         {

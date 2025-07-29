@@ -12,6 +12,7 @@
         public List<string>? Authors { get; set; }
         public string? Description { get; set; }
         public ImageLinks? ImageLinks { get; set; }
+        public string? Publisher { get; set; } 
         public string? PublishedDate { get; set; }
         public int? PageCount {  get; set; }
 

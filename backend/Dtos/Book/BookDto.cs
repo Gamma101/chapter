@@ -7,7 +7,10 @@
         public string Authors { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string ThumbnailUrl { get; set; } = string.Empty;
+        public string Publisher {  get; set; } = string.Empty;
         public DateOnly? PublishedDate { get; set; }
         public int? PageCount { get; set; }
+        
+      
     }
 }
