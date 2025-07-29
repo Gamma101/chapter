@@ -85,8 +85,8 @@ export default function AuthForm({ isSignUp }: { isSignUp: boolean }) {
   return (
     <div className="bg-secondary p-10 rounded-lg flex gap-10 h-[75%]">
       <div className=" bg-[url('/black-books.jpg')] lg:flex md:flex xl:flex sm:hidden bg-cover bg-center p-5 flex flex-col justify-center rounded-lg">
-        <h1 className="text-5xl font-bold">Welcome to Chapter!</h1>
-        <p className="text-2xl w-[75%] mt-2">
+        <h1 className="text-5xl text-white font-bold">Welcome to Chapter!</h1>
+        <p className="text-2xl text-white w-[75%] mt-2">
           Please provide your information for successfull{" "}
           {isSignUp ? "registration" : "login"}
         </p>
