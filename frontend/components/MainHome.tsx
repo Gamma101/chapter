@@ -6,7 +6,7 @@ import Typewriter from "typewriter-effect"
 
 export default function MainHome() {
   return (
-    <main className="mt-8 md:mt-16 lg:mt-24 px-4 sm:px-6 pt-50">
+    <main className=" px-4 sm:px-6 pt-50">
       <div className="flex flex-col lg:flex-row justify-between items-center gap-8 md:gap-12 lg:gap-16 max-w-7xl mx-auto">
         <div className="flex flex-col gap-6 w-full lg:w-1/2">
           <div className="flex flex-col">
