@@ -48,8 +48,10 @@ namespace backend.Controllers
                     Authors = googleBook.VolumeInfo.Authors != null ? string.Join(",", googleBook.VolumeInfo.Authors) : "Unknown Author",
                     Description = googleBook.VolumeInfo.Description ?? "No description available.",
                     ThumbnailUrl = googleBook.VolumeInfo.ImageLinks?.Thumbnail ?? "",
+                    Publisher = googleBook.VolumeInfo.Publisher ?? "Unknown Publisher.",
                     PublishedDate = publishedDate == new DateOnly() ? null : publishedDate,
                     PageCount = googleBook.VolumeInfo.PageCount != null ? googleBook.VolumeInfo.PageCount : 0
+
 
                 };
                 _dbContext.Books.Add(bookEntity);
@@ -64,6 +66,7 @@ namespace backend.Controllers
                 Authors = bookEntity.Authors,
                 Description = bookEntity.Description,
                 ThumbnailUrl = bookEntity.ThumbnailUrl,
+                Publisher = bookEntity.Publisher,
                 PublishedDate = bookEntity.PublishedDate,
                 PageCount = bookEntity.PageCount
 
