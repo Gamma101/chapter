@@ -14,4 +14,5 @@ namespace backend.Dtos.UserLibrary
         public string ThumbnailUrl { get; set; } = string.Empty;
 
     }
+
 }
