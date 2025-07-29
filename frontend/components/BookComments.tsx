@@ -18,16 +18,16 @@ export default function BookComments({
 
   const deleteComment = async (reviewId: number) => {
     await api
-      .delete(`http://localhost:5105/api/books/${bookId}/${reviewId}`)
+      .delete(`http://localhost:5105/api/review/${reviewId}`)
       .then((data) => {
         setReviews((prev) =>
           prev
             ? prev.filter((review) => review.createdBy !== data.data.createdBy)
-            : null
+            : []
         )
       })
       .catch((e) => {
-        console.log(e)
+        return e
       })
   }
 
@@ -44,7 +44,11 @@ export default function BookComments({
                 <div className="flex flex-row items-center gap-5">
                   {user?.userName === review.createdBy && (
                     <div className="flex flex-col gap-5">
-                      <EditCommentDialog review={review} />
+                      <EditCommentDialog
+                        setReviews={setReviews}
+                        bookId={bookId}
+                        review={review}
+                      />
                       <Trash2
                         onClick={() => {
                           deleteComment(review.id)

@@ -38,7 +38,7 @@ export default function BookPage() {
   useEffect(() => {
     const parseBookReviews = async () => {
       await axios
-        .get(`http://localhost:5105/api/books/${bookId}/reviews`)
+        .get(`http://localhost:5105/api/books/${bookId}/review`)
         .then((data) => {
           setReviews(data.data)
         })

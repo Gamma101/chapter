@@ -18,7 +18,7 @@ export default function Account() {
     }
   }, [])
   return (
-    <div className="px-20 mt-10">
+    <div className="px-20">
       {user && (
         <div className="flex flex-col items-center">
           <User2 className="bg-secondary rounded-full p-5" size={100} />

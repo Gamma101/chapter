@@ -10,7 +10,7 @@ export default function Navbar({ className = "" }: { className?: string }) {
   const currentPage = pathName.replace("/", "")
   return (
     <nav
-      className={`p-5 rounded-b-xl grid grid-cols-3 items-center ${className}`}
+      className={`p-5 rounded-b-xl grid grid-cols-3 fixed z-10 w-full bg-background/80 backdrop-blur-md items-center ${className}`}
     >
       <Link href={"/"} className="flex items-center gap-2 justify-self-start">
         <p className="text-4xl font-bold">§</p>
