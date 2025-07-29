@@ -75,15 +75,8 @@ namespace backend.Controllers
             return Ok(bookDto);
             
         }
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetById([FromRoute] string id)
-        {
-            if(!ModelState.IsValid) { return BadRequest(); }
-            var book = await _bookRepo.GetByIdAsync(id);
-            if (book == null) {return NotFound("Book not found"); }
-            return Ok(book);
-
-        }
+        
+        
 
     }
 }
