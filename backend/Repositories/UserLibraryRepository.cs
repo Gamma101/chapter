@@ -21,6 +21,15 @@ namespace backend.Repositories
             return userLibraryModel;
         }
 
+        public async Task<UserLibrary> DeleteAsync(string userId, string bookId)
+        {
+            var bookModel = await _dbContext.UserLibraries.FirstOrDefaultAsync(b => b.BookId == bookId && b.UserId == userId);
+            if (bookModel == null) { return null; }
+            _dbContext.UserLibraries.Remove(bookModel);
+            await _dbContext.SaveChangesAsync();
+            return bookModel;
+        }
+
         public async Task<List<UserLibrary>> GetUserLibraryAsync(string userId)
         {
             return await _dbContext.UserLibraries

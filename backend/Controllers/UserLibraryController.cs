@@ -76,6 +76,18 @@ namespace backend.Controllers
 
             return CreatedAtAction(nameof(GetUserLibraryEntry), new { bookId = dataDto.BookId }, dataDto);
         }
+        [HttpDelete("{bookId}")]
+        [Authorize]
+        public async Task<IActionResult> Delete([FromRoute] string bookId)
+        {
+            var username = User.GetUsername();
+            var appUser = await _userManager.FindByNameAsync(username);
+          
+            var bookInLibraryModel = await _userLibraryRepo.DeleteAsync(appUser.Id, bookId);
+            if (bookInLibraryModel == null) { return NotFound("You do not have this book in your library!"); }
+            return NoContent();
+
+        }
 
     }
 }
