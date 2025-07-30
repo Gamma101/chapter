@@ -6,6 +6,6 @@ namespace backend.Interfaces
     {
         Task<bool> BookExist(string id);
 
-        DateOnly GetDateOnlyAsync(List<int> date);
+        DateOnly GetDateOnly(List<int> date);
     }
 }
