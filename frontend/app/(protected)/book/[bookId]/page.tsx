@@ -1,22 +1,26 @@
 "use client"
+import AddBookToCollection from "@/components/AddBookToCollection"
 import BookComments from "@/components/BookComments"
 import BookPageSkeleton from "@/components/BookPageSkeleton"
 import UserCommentForm from "@/components/UserCommentForm"
+import { useApi } from "@/hooks/useApi"
 import { BackendBook, Review } from "@/types/book"
 import axios from "axios"
-import { Star } from "lucide-react"
+import { Delete } from "lucide-react"
 import { useTheme } from "next-themes"
 import Image from "next/image"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function BookPage() {
+  const api = useApi()
   const params = useParams()
   const bookId = params.bookId as string
   const [bookInfo, setBookInfo] = useState<BackendBook | null>(null)
   const [reviews, setReviews] = useState<Review[] | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const theme = useTheme()
+  const [isBookInLibrary, setIsBookInLibrary] = useState(false)
 
   // Parse book information
   useEffect(() => {
@@ -47,6 +51,22 @@ export default function BookPage() {
     parseBookReviews()
   }, [bookId])
 
+  // Parse if user already added book to collection
+  useEffect(() => {
+    const parseIsBookInCollection = async () => {
+      await api
+        .get(`http://localhost:5105/api/mylibrary/${bookId}`)
+        .then((data) => {
+          console.log(data.data)
+          setIsBookInLibrary(true)
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+    }
+    parseIsBookInCollection()
+  }, [bookId, api])
+
   return (
     <div className="flex items-center justify-center">
       {isLoading ? (
@@ -64,16 +84,21 @@ export default function BookPage() {
                   unoptimized
                   className="rounded-sm max-h-[500px]"
                 />
-                <p className="text-2xl text-center mt-2 font-semibold">
-                  Your score
-                </p>
-                <div className="flex gap-1">
-                  <Star size={40} className="text-amber-300" />
-                  <Star size={45} className="text-amber-300" />
-                  <Star size={50} className="text-amber-300" />
-                  <Star size={45} className="text-amber-300" />
-                  <Star size={40} className="text-amber-300" />
-                </div>
+                {isBookInLibrary ? (
+                  <div className="flex w-full justify-center items-center mt-3 gap-3">
+                    <p className="font-semibold p-3 bg-secondary rounded-lg">
+                      Book is in your library!
+                    </p>
+                    <div className="bg-secondary p-3 rounded-lg">
+                      <Delete className="text-red-400" />
+                    </div>
+                  </div>
+                ) : (
+                  <AddBookToCollection
+                    setIsBookInLibrary={setIsBookInLibrary}
+                    bookId={bookId}
+                  />
+                )}
               </div>
               <div className="w-[50%] flex flex-col gap-5">
                 <h1 className="text-3xl font-bold">{bookInfo.title}</h1>
@@ -94,10 +119,7 @@ export default function BookPage() {
                   <p className="font-bold text-xl">Description</p>
                   <p>{bookInfo.description.replace(/<[^>]*>/g, "")}</p>
                 </div>
-                <UserCommentForm
-                  setReviews={setReviews}
-                  bookId={parseInt(bookId)}
-                />
+                <UserCommentForm setReviews={setReviews} bookId={bookId} />
                 <div className="mb-20">
                   <p className="text-2xl mb-1 font-bold">Comments</p>
                   {reviews ? (
