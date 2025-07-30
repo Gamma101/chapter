@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
 {
-    [Route("api/books/{bookId}/review")]
+    [Route("api/books/{bookId}/reviews")]
     [ApiController]
     public class BookReviewController : ControllerBase
     {
