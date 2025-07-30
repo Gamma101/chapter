@@ -9,6 +9,7 @@ namespace backend.Interfaces
         Task<UserLibrary> GetUserLibraryEntryAsync(string userId, string bookId); 
         Task<UserLibrary> AddToUserLibraryAsync(UserLibrary userLibrary);
         Task<bool> LibraryEntryExist(string userId, string bookId);
+        Task<UserLibrary> DeleteAsync(string userId, string bookId);
 
         
     }

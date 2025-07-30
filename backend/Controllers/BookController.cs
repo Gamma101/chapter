@@ -9,7 +9,7 @@ using System.Globalization;
 
 namespace backend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/books")]
     [ApiController]
     public class BooksController: ControllerBase
     {
@@ -23,17 +23,17 @@ namespace backend.Controllers
             _googleBooksService = googleBooksService;
             _bookRepo = bookRepo;
         }
-        [HttpGet("{googleBookId}")]
-        public async Task<ActionResult<BookDto>> GetBookByGoogleIdAsync(string googleBookId)
+        [HttpGet("{bookId}")]
+        public async Task<ActionResult<BookDto>> GetBookByGoogleIdAsync(string bookId)
         {
-            if (string.IsNullOrEmpty(googleBookId))
+            if (string.IsNullOrEmpty(bookId))
             {
                 return BadRequest("Google Book ID cannot be empty.");
             }
-            var bookEntity = await _dbContext.Books.FirstOrDefaultAsync(b => b.Id == googleBookId);
+            var bookEntity = await _dbContext.Books.FirstOrDefaultAsync(b => b.Id == bookId);
             if (bookEntity == null)
             {
-                var googleBook = await _googleBooksService.GetByGoogleIdAsync(googleBookId);
+                var googleBook = await _googleBooksService.GetByGoogleIdAsync(bookId);
                 if (googleBook == null || googleBook.VolumeInfo == null) { return NotFound("The book was not found."); }
                 DateOnly? publishedDate = null;
                 try
