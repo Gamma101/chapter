@@ -1,4 +1,5 @@
-﻿using backend.Extensions;
+﻿using backend.Dtos.Reviews;
+using backend.Extensions;
 using backend.Interfaces;
 using backend.Mappers;
 using backend.Models;
@@ -28,6 +29,21 @@ namespace backend.Controllers
             {
                 return NotFound("Review is not found for this book.");
             }
+            return Ok(review.ToReviewDto());
+        }
+        [HttpPut("{reviewId:int}")]
+        [Authorize]
+        public async Task<IActionResult> Update([FromRoute] int reviewId, [FromBody] UpdateReviewRequestDto reviewRequestDto)
+        {
+            if (!ModelState.IsValid) { return BadRequest(ModelState); }
+            var username = User.GetUsername();
+            var appUser = await _userManager.FindByNameAsync(username);
+            var review = await _reviewRepo.UpdateAsync(reviewId, reviewRequestDto.ToReviewFromUpdate());
+
+            if (review == null) { return NotFound("Review is not found"); }
+            var reviewFromDb = await _reviewRepo.GetByIdAsync(reviewId);
+
+            if (reviewFromDb.UserId != appUser.Id) { return Forbid(); }
             return Ok(review.ToReviewDto());
         }
         [HttpDelete("{reviewId:int}")]

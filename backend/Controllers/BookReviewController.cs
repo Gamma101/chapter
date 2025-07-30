@@ -50,21 +50,7 @@ namespace backend.Controllers
             await _reviewRepo.CreateAsync(reviewModel);
             return CreatedAtRoute("GetReviewById", new { reviewId = reviewModel.Id }, reviewModel.ToReviewDto());
         }
-        [HttpPut("{reviewId:int}")]
-        [Authorize]
-        public async Task<IActionResult> Update([FromRoute] string bookId, [FromRoute] int reviewId, [FromBody] UpdateReviewRequestDto reviewRequestDto)
-        {
-            if (!ModelState.IsValid) { return BadRequest(ModelState); }
-            var username = User.GetUsername();
-            var appUser = await _userManager.FindByNameAsync(username);
-            var review = await _reviewRepo.UpdateAsync(bookId, reviewId, reviewRequestDto.ToReviewFromUpdate());
-            
-            if (review == null) { return NotFound("Review is not found for this book"); }
-            var reviewFromDb = await _reviewRepo.GetByIdAsync(reviewId);
-
-            if (reviewFromDb.UserId != appUser.Id) { return Forbid(); }
-            return Ok(review.ToReviewDto());
-        }
+        
         
     }
 

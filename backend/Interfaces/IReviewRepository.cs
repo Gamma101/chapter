@@ -7,7 +7,7 @@ namespace backend.Interfaces
         Task<Review> GetByIdAsync(int id);
         Task<List<Review>> GetAllByBookIdAsync(string id);
         Task<Review> CreateAsync(Review reviewModel);
-        Task<Review> UpdateAsync(string bookId, int reviewId, Review reviewModel);
+        Task<Review> UpdateAsync(int reviewId, Review reviewModel);
         Task<Review> DeleteAsync(int reviewId);
        
 

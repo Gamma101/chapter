@@ -35,12 +35,13 @@ namespace backend.Repositories
             return reviewModel;
         }
 
-        public async Task<Review> UpdateAsync(string bookId, int reviewId, Review reviewModel)
+        public async Task<Review> UpdateAsync(int reviewId, Review reviewModel)
         {
-            var exist = await _dbContext.Reviews.FirstOrDefaultAsync(r => r.Id == reviewId && r.BookId == bookId);
+            var exist = await _dbContext.Reviews.FirstOrDefaultAsync(r => r.Id == reviewId);
             if (exist == null) { return null; }
             exist.Title = reviewModel.Title;
             exist.Content = reviewModel.Content;
+            exist.UpdatedAt = reviewModel.UpdatedAt;
             await _dbContext.SaveChangesAsync();
             return exist;
 
