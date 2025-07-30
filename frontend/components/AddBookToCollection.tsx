@@ -1,8 +1,6 @@
 import React, { useState } from "react"
 import {
   Dialog,
-  DialogClose,
-  DialogFooter,
   DialogHeader,
   DialogTrigger,
   DialogContent,
@@ -22,8 +20,15 @@ import {
 } from "./ui/select"
 import { Label } from "./ui/label"
 
-export default function AddBookToCollection({ bookId }: { bookId: string }) {
+export default function AddBookToCollection({
+  bookId,
+  setIsBookInLibrary,
+}: {
+  bookId: string
+  setIsBookInLibrary: React.Dispatch<React.SetStateAction<boolean>>
+}) {
   const api = useApi()
+  const [isOpen, setIsOpen] = useState(false)
 
   const [rating, setRating] = useState(1)
 
@@ -39,6 +44,8 @@ export default function AddBookToCollection({ bookId }: { bookId: string }) {
       })
       .then((data) => {
         console.log(data)
+        setIsOpen(false)
+        setIsBookInLibrary(true)
       })
       .catch((e) => {
         console.log(e)
@@ -46,7 +53,7 @@ export default function AddBookToCollection({ bookId }: { bookId: string }) {
   }
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger className="w-[80%]" asChild>
         <Button className=" mt-5">
           <PlusCircle />
