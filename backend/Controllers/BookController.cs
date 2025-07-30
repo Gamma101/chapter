@@ -35,9 +35,16 @@ namespace backend.Controllers
             {
                 var googleBook = await _googleBooksService.GetByGoogleIdAsync(googleBookId);
                 if (googleBook == null || googleBook.VolumeInfo == null) { return NotFound("The book was not found."); }
-
-                List<int> date = googleBook.VolumeInfo.PublishedDate.Split('-').Select(int.Parse).ToList();
-                var publishedDate = _bookRepo.GetDateOnlyAsync(date);
+                DateOnly? publishedDate = null;
+                try
+                {
+                    if (!string.IsNullOrEmpty(googleBook.VolumeInfo.PublishedDate))
+                    {
+                        var date = googleBook.VolumeInfo.PublishedDate.Split('-').Select(int.Parse).ToList();
+                        publishedDate = _bookRepo.GetDateOnly(date);
+                    }
+                }
+                catch (Exception ex) { }
                 
                
                 bookEntity = new Chapter.Models.Book

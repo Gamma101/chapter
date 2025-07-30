@@ -19,7 +19,7 @@ namespace backend.Repositories
         }
 
 
-        public DateOnly GetDateOnlyAsync(List<int> date)
+        public DateOnly GetDateOnly(List<int> date)
         {
             if (date != null & date.Count != 0)
             {
