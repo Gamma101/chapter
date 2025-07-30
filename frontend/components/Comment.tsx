@@ -7,12 +7,10 @@ import EditCommentDialog from "./EditCommentDialog"
 
 export default function Comment({
   review,
-  bookId,
   isEditing = false,
   setUserReview,
 }: {
   review: Review
-  bookId: string
   isEditing?: boolean
   setUserReview?: React.Dispatch<React.SetStateAction<Review | null>>
 }) {
@@ -23,7 +21,7 @@ export default function Comment({
 
   const deleteComment = async (reviewId: number) => {
     await api
-      .delete(`http://localhost:5105/api/review/${reviewId}`)
+      .delete(`http://localhost:5105/api/reviews/${reviewId}`)
       .then(() => {
         if (typeof setUserReview === "function") {
           setUserReview(null)
@@ -41,7 +39,6 @@ export default function Comment({
             <EditCommentDialog
               setReviewData={setReviewData}
               review={reviewData}
-              bookId={bookId}
             />
             <Trash2
               onClick={() => {

@@ -33,11 +33,13 @@ export default function Collection() {
 
   //There will be user saved books yea :)
   return (
-    <div className="flex flex-wrap justify-center gap-4 py-10 max-w-[90%]">
-      {userCollection &&
-        userCollection.map((book, key) => {
-          return <CollectionBook key={key} book={book} />
-        })}
+    <div className="flex items-center justify-center">
+      <div className="flex flex-wrap justify-center gap-4 py-10 max-w-[90%]">
+        {userCollection &&
+          userCollection.map((book, key) => {
+            return <CollectionBook key={key} book={book} />
+          })}
+      </div>
     </div>
   )
 }

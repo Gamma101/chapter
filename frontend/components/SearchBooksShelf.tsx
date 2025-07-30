@@ -29,9 +29,8 @@ export default function SearchBooksShelf({ data }: { data: Book[] }) {
                 alt="book"
                 src={thumbnailUrl}
                 fill
-                style={{ objectFit: "contain" }}
                 unoptimized
-                className="rounded-sm"
+                className="rounded-lg"
               />
               <div className="relative bottom-7 left-1 w-10"></div>
             </div>
