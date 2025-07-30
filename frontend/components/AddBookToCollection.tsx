@@ -25,42 +25,63 @@ import { Label } from "./ui/label"
 export default function AddBookToCollection({ bookId }: { bookId: string }) {
   const api = useApi()
 
-  //   const [readingStatus, setReadingStatus] = useState(0)
+  const [rating, setRating] = useState(1)
 
-  //   const handleAddBook = async () => {
-  //     api.post(`http://localhost:5105/api/mylibrary`, {
-  //       bookId,
-  //       readingStatus,
-  //     })
-  //   }
+  const handleAddBook = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const formData = new FormData(e.target as HTMLFormElement)
+    const readingStatus = Number(formData.get("status"))
+    console.log(readingStatus)
+    await api
+      .post(`http://localhost:5105/api/mylibrary`, {
+        bookId,
+        readingStatus,
+      })
+      .then((data) => {
+        console.log(data)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }
 
   return (
     <Dialog>
-      <form className="w-full flex items-center justify-center">
-        <DialogTrigger className="w-[80%]" asChild>
-          <Button className=" mt-5">
-            <PlusCircle />
-            <p>Add to collection</p>
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px] bg-secondary">
+      <DialogTrigger className="w-[80%]" asChild>
+        <Button className=" mt-5">
+          <PlusCircle />
+          <p>Add to collection</p>
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px] bg-secondary">
+        <form
+          onSubmit={handleAddBook}
+          className="w-full flex flex-col items-center justify-center"
+        >
           <DialogHeader>
             <DialogTitle>Add book to your collection</DialogTitle>
           </DialogHeader>
           <div className="flex items-center flex-col">
-            {" "}
             <p className="">Your score</p>
             <div className="flex gap-1">
-              <Star size={30} className="text-amber-300" />
-              <Star size={30} className="text-amber-300" />
-              <Star size={30} className="text-amber-300" />
-              <Star size={30} className="text-amber-300" />
-              <Star size={30} className="text-amber-300" />
+              {[1, 2, 3, 4, 5].map((i) => (
+                <Star
+                  key={i}
+                  size={30}
+                  className={
+                    i <= rating
+                      ? "text-amber-300"
+                      : "text-gray-300 cursor-pointer"
+                  }
+                  onClick={() => setRating(i)}
+                  data-testid={`star-${i}`}
+                />
+              ))}
             </div>
           </div>
-          <div className=" gap-2 flex items-center flex-col">
+          <div className="gap-2 flex items-center flex-col mt-4">
             <Label htmlFor="statusSelect">Book status</Label>
-            <Select>
+            <Select name="status" defaultValue={"1"}>
               <SelectTrigger className="min-w-[40%]">
                 <SelectValue
                   id="statusSelect"
@@ -78,12 +99,11 @@ export default function AddBookToCollection({ bookId }: { bookId: string }) {
               </SelectContent>
             </Select>
           </div>
-
-          <Button className="w-[50%] mx-auto" type="submit">
+          <Button className="w-[50%] mx-auto mt-4" type="submit">
             Save changes
           </Button>
-        </DialogContent>
-      </form>
+        </form>
+      </DialogContent>
     </Dialog>
   )
 }
