@@ -18,11 +18,9 @@ import { useState } from "react"
 
 export default function EditCommentDialog({
   review,
-  bookId,
   setReviewData,
 }: {
   review: Review
-  bookId: string
   setReviewData: React.Dispatch<React.SetStateAction<Review>>
 }) {
   const api = useApi()
@@ -32,7 +30,7 @@ export default function EditCommentDialog({
 
   const changeBookReview = async () => {
     await api
-      .put(`http://localhost:5105/api/books/${bookId}/review/${review.id}`, {
+      .put(`http://localhost:5105/api/reviews/${review.id}`, {
         title,
         content,
       })

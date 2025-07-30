@@ -1,15 +1,41 @@
 import { checkBookAndRedirect } from "@/lib/bookUtils"
+import { cn } from "@/lib/utils"
 import { CollectionItem } from "@/types/book"
+import { Star } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import React from "react"
+import React, { ReactNode, useEffect, useState } from "react"
 
 export default function CollectionBook({ book }: { book: CollectionItem }) {
   const router = useRouter()
+  const [bookStatus, setBookStatus] = useState<ReactNode | null>(null)
+
+  useEffect(() => {
+    switch (book.status) {
+      case 0:
+        setBookStatus(
+          <p className={"bg-blue-400 rounded-full px-4"}>Want to Read</p>
+        )
+        break
+      case 1:
+        setBookStatus(
+          <p className={"bg-amber-500 rounded-full px-4"}>Reading</p>
+        )
+        break
+      case 2:
+        setBookStatus(<p className={"bg-green-400 rounded-full px-4"}>Read</p>)
+        break
+      case 3:
+        setBookStatus(<p className={"bg-red-400 rounded-full px-4"}>Dropped</p>)
+        break
+    }
+
+    console.log("hi")
+  }, [book])
   return (
     <div
       onClick={() => checkBookAndRedirect(book.bookId, router)}
-      className="w-[200px] mb-8 flex flex-col items-center cursor-pointer"
+      className="w-[300px] mb-8 flex flex-col items-center cursor-pointer bg-secondary p-5 rounded-lg gap-2"
     >
       <div className="relative h-[250px] w-[180px]">
         <Image
@@ -23,8 +49,22 @@ export default function CollectionBook({ book }: { book: CollectionItem }) {
       </div>
       <div className="mt-2 w-full text-center">
         <p className="font-bold truncate px-2">{book.title}</p>
-        <p>{book.authors.split(",")[0]}</p>
+        <p>
+          {book.authors.split(",")[0]}{" "}
+          {book.authors.split(",").length > 1 ? "and more" : ""}
+        </p>
       </div>
+      <div className="flex gap-1">
+        {[1, 2, 3, 4, 5].map((el) => {
+          return (
+            <Star
+              className={cn(el < 4 ? "text-yellow-400" : "text-gray-500")}
+              key={el}
+            />
+          )
+        })}
+      </div>
+      <div className="font-semibold">{bookStatus}</div>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { Book } from "@/types/book"
-import axios from "axios"
+import axios, { Axios } from "axios"
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
 
 const googleAPIKey = process.env.NEXT_PUBLIC_GOOGLE_BOOKS_API_KEY
@@ -23,5 +23,16 @@ export const checkBookAndRedirect = async (
     })
     .catch((error) => {
       console.log(error)
+    })
+}
+
+export const deleteBookFromCollection = async (api: Axios, bookId: string) => {
+  await api
+    .delete(`http://localhost:5105/api/mylibrary/${bookId}`)
+    .then(() => {
+      console.log("Successfully deleted book froom collection")
+    })
+    .catch((e) => {
+      console.log(e)
     })
 }
