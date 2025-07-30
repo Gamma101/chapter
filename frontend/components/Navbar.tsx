@@ -51,17 +51,6 @@ export default function Navbar({ className = "" }: { className?: string }) {
         >
           collection
         </Link>
-        <Link
-          href="/reviews"
-          className={cn(
-            "text-xl",
-            currentPage === "reviews"
-              ? "text-white dark:text-black px-2 bg-secondary-foreground  rounded-full transition-all"
-              : ""
-          )}
-        >
-          reviews
-        </Link>
       </div>
 
       <NavbarAccount className="justify-self-end" />

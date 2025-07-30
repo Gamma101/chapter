@@ -19,18 +19,16 @@ import { useState } from "react"
 export default function EditCommentDialog({
   review,
   bookId,
-  setReviews,
+  setReviewData,
 }: {
   review: Review
   bookId: string
-  setReviews: React.Dispatch<React.SetStateAction<Review[] | null>>
+  setReviewData: React.Dispatch<React.SetStateAction<Review>>
 }) {
   const api = useApi()
   const [open, setOpen] = useState(false)
   const [title, setTitle] = useState(review.title)
   const [content, setContent] = useState(review.content)
-
-  console.log(bookId)
 
   const changeBookReview = async () => {
     await api
@@ -38,14 +36,9 @@ export default function EditCommentDialog({
         title,
         content,
       })
-      .then((data) => {
-        console.log(data.data)
-        setReviews((prev) =>
-          prev
-            ? [...prev.filter((rev) => rev.id !== review.id), data.data]
-            : [data.data]
-        )
+      .then(() => {
         setOpen(false)
+        setReviewData((prev) => (prev ? { ...prev, title, content } : prev))
       })
       .catch((e) => {
         console.log(e)

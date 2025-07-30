@@ -12,7 +12,6 @@ export default function SearchBooksShelf({ data }: { data: Book[] }) {
       ? authors[0].slice(0, 15).trim() + "..."
       : authors[0]
   }
-  console.log(data)
   return (
     <div className="flex flex-wrap justify-center gap-4 py-10 max-w-[90%]">
       {data.map((book, key) => {

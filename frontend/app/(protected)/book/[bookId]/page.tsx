@@ -3,6 +3,7 @@ import AddBookToCollection from "@/components/AddBookToCollection"
 import BookComments from "@/components/BookComments"
 import BookPageSkeleton from "@/components/BookPageSkeleton"
 import UserCommentForm from "@/components/UserCommentForm"
+import { useAuth } from "@/context/AuthContext"
 import { useApi } from "@/hooks/useApi"
 import { BackendBook, Review } from "@/types/book"
 import axios from "axios"
@@ -21,6 +22,7 @@ export default function BookPage() {
   const [isLoading, setIsLoading] = useState(true)
   const theme = useTheme()
   const [isBookInLibrary, setIsBookInLibrary] = useState(false)
+  const { user } = useAuth()
 
   // Parse book information
   useEffect(() => {
@@ -44,25 +46,24 @@ export default function BookPage() {
       await axios
         .get(`http://localhost:5105/api/books/${bookId}/review`)
         .then((data) => {
-          setReviews(data.data)
+          setReviews(
+            data.data.filter((rev: Review) => rev.createdBy !== user?.userName)
+          )
         })
         .catch(() => {})
     }
     parseBookReviews()
-  }, [bookId])
+  }, [bookId, user])
 
   // Parse if user already added book to collection
   useEffect(() => {
     const parseIsBookInCollection = async () => {
       await api
         .get(`http://localhost:5105/api/mylibrary/${bookId}`)
-        .then((data) => {
-          console.log(data.data)
+        .then(() => {
           setIsBookInLibrary(true)
         })
-        .catch((e) => {
-          console.log(e)
-        })
+        .catch(() => {})
     }
     parseIsBookInCollection()
   }, [bookId, api])
@@ -121,13 +122,9 @@ export default function BookPage() {
                 </div>
                 <UserCommentForm setReviews={setReviews} bookId={bookId} />
                 <div className="mb-20">
-                  <p className="text-2xl mb-1 font-bold">Comments</p>
-                  {reviews ? (
-                    <BookComments
-                      setReviews={setReviews}
-                      bookId={bookId}
-                      reviews={reviews}
-                    />
+                  <p className="text-2xl mb-1 font-bold">All reviews</p>
+                  {reviews && reviews?.length > 0 ? (
+                    <BookComments bookId={bookId} reviews={reviews} />
                   ) : (
                     <div className="bg-secondary gap-3 p-4 flex flex-col items-center justify-center rounded-lg">
                       <Image
@@ -141,9 +138,7 @@ export default function BookPage() {
                             : "/empty-dark.svg"
                         }
                       />
-                      <p className="text-2xl">
-                        Be the first one to leave a review!
-                      </p>
+                      <p className="text-2xl">No other reviews yet :(</p>
                     </div>
                   )}
                 </div>

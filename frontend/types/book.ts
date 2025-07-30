@@ -26,3 +26,13 @@ export type Review = {
   updatedAt: string
   createdBy: string
 }
+
+export type CollectionItem = {
+  id: number
+  status: number
+  addedDate: string
+  bookId: string
+  title: string
+  authors: string
+  thumbnailUrl: string
+}
