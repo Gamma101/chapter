@@ -5,7 +5,6 @@ import { Button } from "./ui/button"
 import {
   FileStack,
   LogOut,
-  PenBox,
   Settings2Icon,
   User,
   UserCheck2,
@@ -49,12 +48,7 @@ export default function NavbarAccount({ className }: { className: string }) {
                     <p className="text-left w-full">My Collection</p>
                   </Button>
                 </Link>
-                <Link className="w-full" href={"/reviews"}>
-                  <Button variant={"secondary"} className="w-full self-center">
-                    <PenBox />
-                    <p className="text-left w-full">My Reviews</p>
-                  </Button>
-                </Link>
+
                 <div className="flex justify-between w-full ">
                   <Link className="w-[48%]" href={"/settings"}>
                     <Button variant={"secondary"} className="w-full">

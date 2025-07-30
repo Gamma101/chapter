@@ -5,6 +5,7 @@ import BookPageSkeleton from "@/components/BookPageSkeleton"
 import UserCommentForm from "@/components/UserCommentForm"
 import { useAuth } from "@/context/AuthContext"
 import { useApi } from "@/hooks/useApi"
+import { deleteBookFromCollection } from "@/lib/bookUtils"
 import { BackendBook, Review } from "@/types/book"
 import axios from "axios"
 import { Delete } from "lucide-react"
@@ -55,18 +56,23 @@ export default function BookPage() {
     parseBookReviews()
   }, [bookId, user])
 
+  const parseIsBookInCollection = async () => {
+    await api
+      .get(`http://localhost:5105/api/mylibrary/${bookId}`)
+      .then(() => {
+        setIsBookInLibrary(true)
+      })
+      .catch(() => {
+        setIsBookInLibrary(false)
+      })
+  }
+
   // Parse if user already added book to collection
   useEffect(() => {
-    const parseIsBookInCollection = async () => {
-      await api
-        .get(`http://localhost:5105/api/mylibrary/${bookId}`)
-        .then(() => {
-          setIsBookInLibrary(true)
-        })
-        .catch(() => {})
-    }
     parseIsBookInCollection()
   }, [bookId, api])
+
+  console.log("hi")
 
   return (
     <div className="flex items-center justify-center">
@@ -91,7 +97,13 @@ export default function BookPage() {
                       Book is in your library!
                     </p>
                     <div className="bg-secondary p-3 rounded-lg">
-                      <Delete className="text-red-400" />
+                      <Delete
+                        onClick={() => {
+                          deleteBookFromCollection(api, bookId)
+                          setIsBookInLibrary(false)
+                        }}
+                        className="text-red-400"
+                      />
                     </div>
                   </div>
                 ) : (
