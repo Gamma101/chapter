@@ -10,7 +10,7 @@ export default function UserCommentForm({
   bookId,
   setReviews,
 }: {
-  bookId: number
+  bookId: string
   setReviews: React.Dispatch<React.SetStateAction<Review[] | null>>
 }) {
   const [title, setTitle] = useState("")

@@ -94,10 +94,7 @@ export default function BookPage() {
                   <p className="font-bold text-xl">Description</p>
                   <p>{bookInfo.description.replace(/<[^>]*>/g, "")}</p>
                 </div>
-                <UserCommentForm
-                  setReviews={setReviews}
-                  bookId={parseInt(bookId)}
-                />
+                <UserCommentForm setReviews={setReviews} bookId={bookId} />
                 <div className="mb-20">
                   <p className="text-2xl mb-1 font-bold">Comments</p>
                   {reviews ? (
