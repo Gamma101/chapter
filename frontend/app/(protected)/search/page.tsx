@@ -15,6 +15,7 @@ export default function SearchPage() {
   const googleAPIKey = process.env.NEXT_PUBLIC_GOOGLE_BOOKS_API_KEY
   const [data, setData] = useState<Book[] | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
   const theme = useTheme()
 
   useEffect(() => {
@@ -36,6 +37,10 @@ export default function SearchPage() {
     fetchBooksByQuery()
   }, [query, googleAPIKey])
 
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   return (
     <div className="flex items-center flex-col">
       <SearchBar className="w-[30%] mb-5" />
@@ -55,31 +60,33 @@ export default function SearchPage() {
         ) : (
           <div className="">
             <div className="flex items-center justify-center flex-col mt-20">
-              {query ? (
-                <Image
-                  width={100}
-                  height={100}
-                  alt="search"
-                  className="w-100 h-100"
-                  src={
-                    theme.theme === "light"
-                      ? "/empty-white.svg"
-                      : "/empty-dark.svg"
-                  }
-                />
-              ) : (
-                <Image
-                  width={100}
-                  height={100}
-                  alt="search"
-                  className="w-120 h-120"
-                  src={
-                    theme.theme === "light"
-                      ? "/search-white.svg"
-                      : "search-dark.svg"
-                  }
-                />
-              )}
+              {query
+                ? isMounted && (
+                    <Image
+                      width={100}
+                      height={100}
+                      alt="search"
+                      className="w-100 h-100"
+                      src={
+                        theme.theme === "light"
+                          ? "/empty-white.svg"
+                          : "/empty-dark.svg"
+                      }
+                    />
+                  )
+                : isMounted && (
+                    <Image
+                      width={100}
+                      height={100}
+                      alt="search"
+                      className="w-120 h-120"
+                      src={
+                        theme.theme === "light"
+                          ? "/search-white.svg"
+                          : "search-dark.svg"
+                      }
+                    />
+                  )}
               <p className="text-4xl">
                 {query ? "No books found :(" : "Find the book you like!"}
               </p>

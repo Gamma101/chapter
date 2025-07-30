@@ -36,14 +36,12 @@ export default function AddBookToCollection({
     e.preventDefault()
     const formData = new FormData(e.target as HTMLFormElement)
     const readingStatus = Number(formData.get("status"))
-    console.log(readingStatus)
     await api
       .post(`http://localhost:5105/api/mylibrary`, {
         bookId,
         readingStatus,
       })
-      .then((data) => {
-        console.log(data)
+      .then(() => {
         setIsOpen(false)
         setIsBookInLibrary(true)
       })
