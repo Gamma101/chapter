@@ -1,10 +1,10 @@
 "use client"
+import AddBookToCollection from "@/components/AddBookToCollection"
 import BookComments from "@/components/BookComments"
 import BookPageSkeleton from "@/components/BookPageSkeleton"
 import UserCommentForm from "@/components/UserCommentForm"
 import { BackendBook, Review } from "@/types/book"
 import axios from "axios"
-import { Star } from "lucide-react"
 import { useTheme } from "next-themes"
 import Image from "next/image"
 import { useParams } from "next/navigation"
@@ -64,16 +64,7 @@ export default function BookPage() {
                   unoptimized
                   className="rounded-sm max-h-[500px]"
                 />
-                <p className="text-2xl text-center mt-2 font-semibold">
-                  Your score
-                </p>
-                <div className="flex gap-1">
-                  <Star size={40} className="text-amber-300" />
-                  <Star size={45} className="text-amber-300" />
-                  <Star size={50} className="text-amber-300" />
-                  <Star size={45} className="text-amber-300" />
-                  <Star size={40} className="text-amber-300" />
-                </div>
+                <AddBookToCollection bookId={bookId} />
               </div>
               <div className="w-[50%] flex flex-col gap-5">
                 <h1 className="text-3xl font-bold">{bookInfo.title}</h1>
