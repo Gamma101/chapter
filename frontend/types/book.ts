@@ -29,7 +29,7 @@ export type Review = {
 
 export type CollectionItem = {
   id: number
-  status: number
+  status: string
   addedDate: string
   bookId: string
   title: string
