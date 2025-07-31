@@ -4,6 +4,7 @@ import { Review } from "@/types/book"
 import { ThumbsDown, ThumbsUp, Trash2, User2 } from "lucide-react"
 import React, { useState } from "react"
 import EditCommentDialog from "./EditCommentDialog"
+import { deleteComment } from "@/lib/bookUtils"
 
 export default function Comment({
   review,
@@ -19,18 +20,6 @@ export default function Comment({
 
   const [reviewData, setReviewData] = useState(review)
 
-  const deleteComment = async (reviewId: number) => {
-    await api
-      .delete(`http://localhost:5105/api/reviews/${reviewId}`)
-      .then(() => {
-        if (typeof setUserReview === "function") {
-          setUserReview(null)
-        }
-      })
-      .catch((e) => {
-        return e
-      })
-  }
   return (
     <div className="flex gap-10 bg-secondary rounded-lg p-5 justify-between items-center">
       <div className="flex flex-row items-center gap-5">
@@ -40,12 +29,14 @@ export default function Comment({
               setReviewData={setReviewData}
               review={reviewData}
             />
-            <Trash2
-              onClick={() => {
-                deleteComment(reviewData.id)
-              }}
-              className="text-red-400 cursor-pointer"
-            />
+            {setUserReview && (
+              <Trash2
+                onClick={() => {
+                  deleteComment(api, reviewData.id, setUserReview)
+                }}
+                className="text-red-400 cursor-pointer"
+              />
+            )}
           </div>
         )}
         <div className="flex items-center flex-col">

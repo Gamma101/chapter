@@ -7,6 +7,8 @@ import { Review } from "@/types/book"
 import LoadingButton from "./LoadingButton"
 import Comment from "./Comment"
 import { useAuth } from "@/context/AuthContext"
+import useWindowWidth from "@/hooks/useWindowWidth"
+import CommentMobile from "./CommentMobile"
 
 export default function UserCommentForm({
   bookId,
@@ -20,6 +22,7 @@ export default function UserCommentForm({
   const [isLoading, setIsLoading] = useState(false)
   const [userReview, setUserReview] = useState<Review | null>(null)
   const { user } = useAuth()
+  const width = useWindowWidth()
 
   const getUserReview = async () => {
     await api
@@ -61,11 +64,21 @@ export default function UserCommentForm({
         {userReview ? "Your review" : "Leave your review"}
       </h2>
       {userReview ? (
-        <Comment
-          setUserReview={setUserReview}
-          isEditing={true}
-          review={userReview}
-        />
+        <div key={userReview.id}>
+          {width && width > 600 ? (
+            <Comment
+              setUserReview={setUserReview}
+              isEditing={true}
+              review={userReview}
+            />
+          ) : (
+            <CommentMobile
+              setUserReview={setUserReview}
+              isEditing={true}
+              review={userReview}
+            />
+          )}
+        </div>
       ) : (
         <div className="flex items-center justify-center bg-secondary p-5 rounded-lg">
           <div className="w-[80%] flex flex-col gap-3">

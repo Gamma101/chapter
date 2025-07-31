@@ -11,19 +11,27 @@ import {
 } from "lucide-react"
 import { useAuth } from "@/context/AuthContext"
 import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover"
+import { MenuPopup } from "./MenuPopup"
 
-export default function NavbarAccount({ className }: { className: string }) {
+export default function NavbarAccount({
+  className,
+  currentPage,
+}: {
+  currentPage: string
+  className: string
+}) {
   const { isAuthenticated, user, logout } = useAuth()
   return (
     <div className={className}>
       <div className="flex gap-5 items-center">
+        <MenuPopup currentPage={currentPage} />
         <ThemeToggle />
         {isAuthenticated ? (
           <Popover>
-            <PopoverTrigger>
-              <div className="p-2 transition-all duration-300 dark:bg-white bg-black hover:opacity-80 rounded-full cursor-pointer">
+            <PopoverTrigger asChild>
+              <Button className="p-5 rounded-full">
                 <User className="dark:text-black text-white" />
-              </div>
+              </Button>
             </PopoverTrigger>
             <PopoverContent className="flex flex-col item-center justify-center text-center">
               <div className="flex items-center rounded-lg gap-2 py-2 mb-2">

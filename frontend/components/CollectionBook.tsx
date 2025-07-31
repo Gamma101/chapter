@@ -12,20 +12,20 @@ export default function CollectionBook({ book }: { book: CollectionItem }) {
 
   useEffect(() => {
     switch (book.status) {
-      case 0:
+      case "WantToRead":
         setBookStatus(
           <p className={"bg-blue-400 rounded-full px-4"}>Want to Read</p>
         )
         break
-      case 1:
+      case "Reading":
         setBookStatus(
           <p className={"bg-amber-500 rounded-full px-4"}>Reading</p>
         )
         break
-      case 2:
+      case "Read":
         setBookStatus(<p className={"bg-green-400 rounded-full px-4"}>Read</p>)
         break
-      case 3:
+      case "3": // will fix later because backend doesnt have third option yet
         setBookStatus(<p className={"bg-red-400 rounded-full px-4"}>Dropped</p>)
         break
     }

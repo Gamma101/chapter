@@ -14,8 +14,10 @@ export type BackendBook = {
   authors: string
   description: string
   thumbnailUrl: string
+  publisher: string
   publishedDate: string
   libraryEntries: string[]
+  pageCount: number
 }
 
 export type Review = {
@@ -29,7 +31,7 @@ export type Review = {
 
 export type CollectionItem = {
   id: number
-  status: number
+  status: string
   addedDate: string
   bookId: string
   title: string
