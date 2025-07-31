@@ -8,7 +8,7 @@ import { useApi } from "@/hooks/useApi"
 import { deleteBookFromCollection } from "@/lib/bookUtils"
 import { BackendBook, Review } from "@/types/book"
 import axios from "axios"
-import { Delete, Loader2 } from "lucide-react"
+import { Delete, Info, Loader2 } from "lucide-react"
 import { useTheme } from "next-themes"
 import Image from "next/image"
 import { useParams } from "next/navigation"
@@ -140,6 +140,27 @@ export default function BookPage() {
                 <div>
                   <p className="font-bold text-xl">Description</p>
                   <p>{bookInfo.description.replace(/<[^>]*>/g, "")}</p>
+                </div>
+                <div className="flex items-center gap-4">
+                  <Info size={30} />
+                  <div className="">
+                    <p className="font-semibold">{bookInfo.pageCount} pages</p>
+                    {bookInfo.publishedDate && bookInfo.publisher && (
+                      <p className="">
+                        Published in{" "}
+                        <span className="font-semibold">
+                          {bookInfo.publishedDate
+                            .split("-")
+                            .reverse()
+                            .join(".")}
+                        </span>{" "}
+                        by{" "}
+                        <span className="font-semibold">
+                          {bookInfo.publisher}
+                        </span>
+                      </p>
+                    )}
+                  </div>
                 </div>
                 <UserCommentForm setReviews={setReviews} bookId={bookId} />
                 <div className="mb-20">

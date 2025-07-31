@@ -14,8 +14,10 @@ export type BackendBook = {
   authors: string
   description: string
   thumbnailUrl: string
+  publisher: string
   publishedDate: string
   libraryEntries: string[]
+  pageCount: number
 }
 
 export type Review = {
