@@ -8,7 +8,7 @@ export default function BookInformation({
   bookInfo: BackendBook
 }) {
   return (
-    <div>
+    <div className="flex flex-col gap-3">
       <h1 className="text-3xl font-bold">{bookInfo.title}</h1>
       <div className="font-bold text-xl">
         <p>Authors: </p>
