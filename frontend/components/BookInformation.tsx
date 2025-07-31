@@ -1,12 +1,26 @@
+import { cn } from "@/lib/utils"
 import { BackendBook } from "@/types/book"
-import { Info } from "lucide-react"
-import React from "react"
+import { ArrowDownIcon, Info } from "lucide-react"
+import React, { useEffect, useRef, useState } from "react"
 
 export default function BookInformation({
   bookInfo,
 }: {
   bookInfo: BackendBook
 }) {
+  const [isDescriptionShow, setIsDescriptionShown] = useState(false)
+  const [isOverflowing, setIsOverflowing] = useState(false)
+
+  const descRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const element = descRef.current
+    if (element) {
+      const overflowing = element.scrollHeight > element.clientHeight
+      setIsOverflowing(overflowing)
+    }
+  }, [bookInfo.description])
+
   return (
     <div className="flex flex-col gap-3">
       <h1 className="text-3xl font-bold">{bookInfo.title}</h1>
@@ -25,12 +39,33 @@ export default function BookInformation({
       </div>
       <div>
         <p className="font-bold text-xl">Description</p>
-        <p>{bookInfo.description.replace(/<[^>]*>/g, "")}</p>
+        <div
+          ref={descRef}
+          className={cn(
+            "overflow-hidden transition-all duration-300",
+            isDescriptionShow ? "h-auto" : "max-h-[120px]"
+          )}
+        >
+          <p className="break-words">
+            {bookInfo.description.replace(/<[^>]*>/g, "")}
+          </p>
+        </div>
+        {!isDescriptionShow && isOverflowing && (
+          <div
+            onClick={() => {
+              setIsDescriptionShown(true)
+            }}
+            className="flex justify-center items-center cursor-pointer gap-1"
+          >
+            <p className="text-xl font-bold">Show more</p>
+            <ArrowDownIcon size={20} />
+          </div>
+        )}
       </div>
       <div className="flex items-center gap-4">
         <Info size={30} />
         <div className="">
-          <p className="font-semibold">{bookInfo.pageCount} pages</p>
+          <p className="font-semibold">{bookInfo.pageCount} Pages</p>
           {bookInfo.publishedDate && bookInfo.publisher && (
             <p className="">
               Published in{" "}
