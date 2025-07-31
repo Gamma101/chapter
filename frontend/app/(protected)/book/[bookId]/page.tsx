@@ -48,7 +48,7 @@ export default function BookPage() {
     if (!user) return
     const parseBookReviews = async () => {
       await axios
-        .get(`http://localhost:5105/api/books/${bookId}/review`)
+        .get(`http://localhost:5105/api/books/${bookId}/reviews`)
         .then((data) => {
           setReviews(
             data.data.filter((rev: Review) => rev.createdBy !== user?.userName)
@@ -85,7 +85,7 @@ export default function BookPage() {
       ) : (
         <div className="w-full max-w-[90%] mx-auto px-4">
           {bookInfo && (
-            <div className="flex flex-row gap-10">
+            <div className="flex flex-col lg:flex-row md:flex-row xl:flex-row xs:flex-col sm:flex-col gap-10">
               <div className="flex items-center flex-col">
                 <Image
                   alt="book"
@@ -123,7 +123,7 @@ export default function BookPage() {
                   />
                 )}
               </div>
-              <div className="w-[50%] flex flex-col gap-5">
+              <div className="w-full xl:w-[50%] lg:w-[50%] flex flex-col gap-5">
                 <BookInformation bookInfo={bookInfo} />
                 <UserCommentForm setReviews={setReviews} bookId={bookId} />
                 <div className="mb-20">

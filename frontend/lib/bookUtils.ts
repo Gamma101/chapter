@@ -1,4 +1,4 @@
-import { Book } from "@/types/book"
+import { Book, Review } from "@/types/book"
 import axios, { Axios } from "axios"
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
 
@@ -34,5 +34,22 @@ export const deleteBookFromCollection = async (api: Axios, bookId: string) => {
     })
     .catch((e) => {
       console.log(e)
+    })
+}
+
+export const deleteComment = async (
+  api: Axios,
+  reviewId: number,
+  setUserReview: React.Dispatch<React.SetStateAction<Review | null>>
+) => {
+  await api
+    .delete(`http://localhost:5105/api/reviews/${reviewId}`)
+    .then(() => {
+      if (typeof setUserReview === "function") {
+        setUserReview(null)
+      }
+    })
+    .catch((e) => {
+      return e
     })
 }
