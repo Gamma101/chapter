@@ -8,7 +8,7 @@ import { useApi } from "@/hooks/useApi"
 import { deleteBookFromCollection } from "@/lib/bookUtils"
 import { BackendBook, Review } from "@/types/book"
 import axios from "axios"
-import { Delete } from "lucide-react"
+import { Delete, Loader2 } from "lucide-react"
 import { useTheme } from "next-themes"
 import Image from "next/image"
 import { useParams } from "next/navigation"
@@ -24,6 +24,7 @@ export default function BookPage() {
   const theme = useTheme()
   const [isBookInLibrary, setIsBookInLibrary] = useState(false)
   const { user } = useAuth()
+  const [isDeletingLoading, setIsDeletingloading] = useState(false)
 
   // Parse book information
   useEffect(() => {
@@ -32,8 +33,8 @@ export default function BookPage() {
         .get(`http://localhost:5105/api/Books/${bookId}`)
         .then((data) => {
           setBookInfo(data.data)
-          setIsLoading(false)
         })
+        .catch(() => {})
         .finally(() => {
           setIsLoading(false)
         })
@@ -43,6 +44,7 @@ export default function BookPage() {
 
   // Parse book reviews
   useEffect(() => {
+    if (!user) return
     const parseBookReviews = async () => {
       await axios
         .get(`http://localhost:5105/api/books/${bookId}/review`)
@@ -56,23 +58,24 @@ export default function BookPage() {
     parseBookReviews()
   }, [bookId, user])
 
-  const parseIsBookInCollection = async () => {
-    await api
-      .get(`http://localhost:5105/api/mylibrary/${bookId}`)
-      .then(() => {
-        setIsBookInLibrary(true)
-      })
-      .catch(() => {
-        setIsBookInLibrary(false)
-      })
-  }
-
   // Parse if user already added book to collection
   useEffect(() => {
+    setIsDeletingloading(true)
+    const parseIsBookInCollection = async () => {
+      await api
+        .get(`http://localhost:5105/api/mylibrary/${bookId}`)
+        .then(() => {
+          setIsBookInLibrary(true)
+        })
+        .catch(() => {
+          setIsBookInLibrary(false)
+        })
+        .finally(() => {
+          setIsDeletingloading(false)
+        })
+    }
     parseIsBookInCollection()
   }, [bookId, api])
-
-  console.log("hi")
 
   return (
     <div className="flex items-center justify-center">
@@ -97,13 +100,19 @@ export default function BookPage() {
                       Book is in your library!
                     </p>
                     <div className="bg-secondary p-3 rounded-lg">
-                      <Delete
-                        onClick={() => {
-                          deleteBookFromCollection(api, bookId)
-                          setIsBookInLibrary(false)
-                        }}
-                        className="text-red-400"
-                      />
+                      {isDeletingLoading ? (
+                        <div className="animate-spin">
+                          <Loader2 />
+                        </div>
+                      ) : (
+                        <Delete
+                          onClick={() => {
+                            deleteBookFromCollection(api, bookId)
+                            setIsBookInLibrary(false)
+                          }}
+                          className="text-red-400"
+                        />
+                      )}
                     </div>
                   </div>
                 ) : (
