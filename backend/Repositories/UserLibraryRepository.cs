@@ -30,18 +30,50 @@ namespace backend.Repositories
             return bookModel;
         }
 
-        public async Task<List<UserLibrary>> GetUserLibraryAsync(string userId)
+        public async Task<List<UserLibraryDto>> GetUserLibraryAsync(string userId)
         {
             return await _dbContext.UserLibraries
                 .Where(entry => entry.UserId == userId)
-                .Include(entry => entry.Book)
                 .OrderByDescending(entry => entry.AddedDate)
+                .Select(entry => new UserLibraryDto
+                {
+                    Id = entry.Id,
+                    Status = entry.Status.ToString(),
+                    AddedDate = entry.AddedDate,
+                    BookId = entry.Book.Id,
+                    Title = entry.Book.Title,
+                    Authors = entry.Book.Authors,
+                    ThumbnailUrl = entry.Book.ThumbnailUrl,
+
+                    UserRating = _dbContext.Ratings
+                        .Where(r => r.BookId == entry.BookId && r.UserId == userId)
+                        .Select(r => (int?)r.Value)
+                        .FirstOrDefault()
+                })
                 .ToListAsync();
         }
 
-        public async Task<UserLibrary> GetUserLibraryEntryAsync(string userId, string bookId)
+        public async Task<UserLibraryDto> GetUserLibraryEntryAsync(string userId, string bookId)
         {
-            return await _dbContext.UserLibraries.Include(e => e.Book).FirstOrDefaultAsync(entry => entry.BookId == bookId && entry.UserId == userId);
+            return await _dbContext.UserLibraries
+                .Where(entry => entry.BookId == bookId && entry.UserId == userId)
+                .Select(entry => new UserLibraryDto
+                {
+                    Id = entry.Id,
+                    Status = entry.Status.ToString(),
+                    AddedDate = entry.AddedDate,
+                    BookId = entry.Book.Id,
+                    Title = entry.Book.Title,
+                    Authors = entry.Book.Authors,
+                    ThumbnailUrl = entry.Book.ThumbnailUrl,
+
+                    UserRating = _dbContext.Ratings
+                        .Where(r => r.BookId == entry.BookId && r.UserId == userId)
+                        .Select(r => (int?)r.Value)
+                        .FirstOrDefault()
+                })
+                .FirstOrDefaultAsync();
+
         }
 
         public async Task<bool> LibraryEntryExist(string userId, string bookId)
