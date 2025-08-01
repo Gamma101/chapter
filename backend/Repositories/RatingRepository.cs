@@ -3,6 +3,7 @@ using backend.Interfaces;
 using backend.Mappers;
 using Chapter.Data;
 using Chapter.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Repositories
@@ -36,6 +37,15 @@ namespace backend.Repositories
         public async Task<Rating> GetUserRatingForBookAsync(string bookId, string userId)
         {
             return await _dbContext.Ratings.FirstOrDefaultAsync(r => r.BookId == bookId && r.UserId == userId);
+        }
+
+        public async Task<Rating> DeleteRatingAsync(string bookId, string userId)
+        {
+            var ratingModel = await _dbContext.Ratings.FirstOrDefaultAsync(r => r.BookId == bookId && r.UserId == userId);
+            if (ratingModel == null) return null;
+            _dbContext.Ratings.Remove(ratingModel);
+            await _dbContext.SaveChangesAsync();
+            return ratingModel;
         }
     }
 }

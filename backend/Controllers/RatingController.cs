@@ -29,7 +29,7 @@ namespace backend.Controllers
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
             var rating = await _ratingRepo.GetUserRatingForBookAsync(bookId, appUser.Id);
-            if(rating == null) {return NotFound();}
+            if (rating == null) { return NotFound(); }
             return Ok(rating.ToRatingDto());
         }
         [HttpPut("/api/books/{bookId}/rating")]
@@ -40,7 +40,7 @@ namespace backend.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if(!await _bookRepo.BookExist(bookId)) { return NotFound("Book is not found"); }
+            if (!await _bookRepo.BookExist(bookId)) { return NotFound("Book is not found"); }
             var username = User.GetUsername();
             if (string.IsNullOrEmpty(username))
             {
@@ -51,10 +51,27 @@ namespace backend.Controllers
             var updatedRating = await _ratingRepo.SetRatingAsync(bookId, appUser.Id, addRatingDto);
             var updatedRatingDto = updatedRating.ToRatingDto();
             return Ok(updatedRatingDto);
-            
+        }
+        [HttpDelete("/api/books/{bookId}/rating")]
+        [Authorize]
+        public async Task<IActionResult> Delete([FromRoute] string bookId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var username = User.GetUsername();
+            if (string.IsNullOrEmpty(username))
+            {
+                return Unauthorized();
+            }
+            var appUser = await _userManager.FindByNameAsync(username);
+            var rating = await _ratingRepo.DeleteRatingAsync(bookId, appUser.Id);
+            if (rating == null) return NotFound();
+            return NoContent();
+
 
         }
 
     }
-    
 }
