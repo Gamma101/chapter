@@ -43,8 +43,7 @@ export default function SearchPage() {
 
   return (
     <div className="flex items-center flex-col">
-      <SearchBar className="w-[30%] mb-5" />
-
+      <SearchBar className="mb-5" />
       {query && (
         <h1 className="text-3xl font-semibold text-center">
           Results by search: {query}

@@ -8,7 +8,7 @@ import {
 } from "./ui/dialog"
 import { Button } from "./ui/button"
 import { useApi } from "@/hooks/useApi"
-import { PlusCircle, Star } from "lucide-react"
+import { PlusCircle } from "lucide-react"
 import {
   Select,
   SelectContent,
@@ -29,8 +29,6 @@ export default function AddBookToCollection({
 }) {
   const api = useApi()
   const [isOpen, setIsOpen] = useState(false)
-
-  const [rating, setRating] = useState(1)
 
   const handleAddBook = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -66,24 +64,6 @@ export default function AddBookToCollection({
           <DialogHeader>
             <DialogTitle>Add book to your collection</DialogTitle>
           </DialogHeader>
-          <div className="flex items-center flex-col">
-            <p className="">Your score</p>
-            <div className="flex gap-1">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <Star
-                  key={i}
-                  size={30}
-                  className={
-                    i <= rating
-                      ? "text-amber-300"
-                      : "text-gray-300 cursor-pointer"
-                  }
-                  onClick={() => setRating(i)}
-                  data-testid={`star-${i}`}
-                />
-              ))}
-            </div>
-          </div>
           <div className="gap-2 flex items-center flex-col mt-4">
             <Label htmlFor="statusSelect">Book status</Label>
             <Select name="status" defaultValue={"1"}>

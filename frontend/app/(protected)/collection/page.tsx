@@ -22,14 +22,10 @@ export default function Collection() {
         .then((data) => {
           setUserCollection(data.data)
         })
-        .catch((e) => {
-          console.log(e)
-        })
+        .catch(() => {})
     }
     fetchUserCollection()
   }, [user])
-
-  console.log(userCollection)
 
   //There will be user saved books yea :)
   return (

@@ -29,8 +29,6 @@ export default function CollectionBook({ book }: { book: CollectionItem }) {
         setBookStatus(<p className={"bg-red-400 rounded-full px-4"}>Dropped</p>)
         break
     }
-
-    console.log("hi")
   }, [book])
   return (
     <div
@@ -55,10 +53,12 @@ export default function CollectionBook({ book }: { book: CollectionItem }) {
         </p>
       </div>
       <div className="flex gap-1">
-        {[1, 2, 3, 4, 5].map((el) => {
+        {[0, 1, 2, 3, 4].map((el) => {
           return (
             <Star
-              className={cn(el < 4 ? "text-yellow-400" : "text-gray-500")}
+              className={cn(
+                el < book.userRating ? "text-yellow-400" : "text-gray-500"
+              )}
               key={el}
             />
           )

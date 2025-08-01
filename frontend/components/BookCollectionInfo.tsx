@@ -5,6 +5,7 @@ import Image from "next/image"
 import React, { useEffect, useState } from "react"
 import AddBookToCollection from "./AddBookToCollection"
 import { deleteBookFromCollection } from "@/lib/bookUtils"
+import BookStars from "./BookStars"
 
 export default function BookCollectionInfo({
   bookInfo,
@@ -24,8 +25,7 @@ export default function BookCollectionInfo({
     const parseIsBookInCollection = async () => {
       await api
         .get(`http://localhost:5105/api/mylibrary/${bookId}`)
-        .then((data) => {
-          console.log(data.data)
+        .then(() => {
           setIsBookInLibrary(true)
         })
         .catch(() => {
@@ -48,6 +48,7 @@ export default function BookCollectionInfo({
         unoptimized
         className="rounded-sm max-h-[500px]"
       />
+      <BookStars api={api} bookId={bookId} />
       {isBookInLibrary ? (
         <div className="flex w-full justify-center items-center mt-3 gap-3">
           <p className="font-semibold p-3 bg-secondary rounded-lg">
