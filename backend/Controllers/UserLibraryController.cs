@@ -45,8 +45,7 @@ namespace backend.Controllers
             var appUser = await _userManager.FindByNameAsync(username);
             var entry = await _userLibraryRepo.GetUserLibraryEntryAsync(appUser.Id, bookId);
             if (entry == null) { return NotFound(); }
-            var entryDto = entry.ToUserLibraryDto();
-            return Ok(entryDto);
+            return Ok(entry);
         }
         [HttpPost]
         [Authorize]
@@ -71,9 +70,7 @@ namespace backend.Controllers
 
             var responseData = await _userLibraryRepo.GetUserLibraryEntryAsync(appUser.Id, libraryDto.BookId);
             if (responseData == null) { return StatusCode(500); }
-            var dataDto = responseData.ToUserLibraryDto();
-
-            return CreatedAtAction(nameof(GetUserLibraryEntry), new { bookId = dataDto.BookId }, dataDto);
+            return CreatedAtAction(nameof(GetUserLibraryEntry), new { bookId = responseData.BookId }, responseData);
         }
         [HttpDelete("{bookId}")]
         [Authorize]
