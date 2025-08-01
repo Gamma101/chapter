@@ -35,8 +35,7 @@ namespace backend.Controllers
             {
                 return NotFound("Your library is not found");
             }
-            var UserLibraryDto = library.Select(ul => ul.ToUserLibraryDto()).ToList();
-            return Ok(UserLibraryDto);
+            return Ok(library);
         }
         [HttpGet("{bookId}", Name = "GetUserLibraryEntryByBookId")]
         [Authorize]
