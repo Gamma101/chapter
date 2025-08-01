@@ -8,5 +8,7 @@ namespace backend.Interfaces
         Task<Rating> GetUserRatingForBookAsync(string bookId, string userId);
         Task<Rating> SetRatingAsync(string bookId, string userId, AddRatingDto ratingDto);
         Task<Rating> DeleteRatingAsync(string bookId, string userId);
+        Task<RatingInfoDto> GetRatingInfoAsync(string bookId);
+
     }
 }

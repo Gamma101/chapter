@@ -69,9 +69,15 @@ namespace backend.Controllers
             var rating = await _ratingRepo.DeleteRatingAsync(bookId, appUser.Id);
             if (rating == null) return NotFound();
             return NoContent();
-
-
         }
-
+        [HttpGet("/api/books/{bookId}/rating/info")]
+        public async Task<IActionResult> GetRatingInfo([FromRoute] string bookId)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!await _bookRepo.BookExist(bookId)) {return NotFound();}
+            var info = await _ratingRepo.GetRatingInfoAsync(bookId);
+            if (info == null) return NotFound();
+            return Ok(info);
+        }
     }
 }

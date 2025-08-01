@@ -47,5 +47,27 @@ namespace backend.Repositories
             await _dbContext.SaveChangesAsync();
             return ratingModel;
         }
+
+        public async Task<RatingInfoDto> GetRatingInfoAsync(string bookId)
+        {
+            var ratings = _dbContext.Ratings.Where(r => r.BookId == bookId);
+            if(!await ratings.AnyAsync())
+            {
+                return new RatingInfoDto
+                {
+                    AverageRating = null,
+                    RatingsCount = 0
+                };
+            }
+            var info = await ratings
+                .GroupBy(r => r.BookId)
+                .Select(a => new RatingInfoDto
+                {
+                    AverageRating = a.Average(r => r.Value),
+                    RatingsCount = a.Count()
+                })
+                .FirstOrDefaultAsync();
+            return info;
+        }
     }
 }
