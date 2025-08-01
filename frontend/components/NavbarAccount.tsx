@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import ThemeToggle from "./ThemeToggle"
 import Link from "next/link"
 import { Button } from "./ui/button"
@@ -7,7 +7,7 @@ import {
   LogOut,
   Settings2Icon,
   User,
-  UserCheck2,
+  // UserCheck2,
 } from "lucide-react"
 import { useAuth } from "@/context/AuthContext"
 import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover"
@@ -21,13 +21,14 @@ export default function NavbarAccount({
   className: string
 }) {
   const { isAuthenticated, user, logout } = useAuth()
+  const [isOpen, setIsOpen] = useState(false)
   return (
     <div className={className}>
       <div className="flex gap-5 items-center">
         <MenuPopup currentPage={currentPage} />
         <ThemeToggle />
         {isAuthenticated ? (
-          <Popover>
+          <Popover open={isOpen} onOpenChange={setIsOpen}>
             <PopoverTrigger asChild>
               <Button className="p-5 rounded-full">
                 <User className="dark:text-black text-white" />
@@ -44,13 +45,17 @@ export default function NavbarAccount({
                 </div>
               </div>
               <div className="flex flex-col items-start gap-2">
-                <Link className="w-full" href={"/account"}>
+                {/* <Link className="w-full" href={"/account"}>
                   <Button variant={"secondary"} className="w-full self-center">
                     <UserCheck2 />
                     <p className="text-left w-full">My Profile</p>
                   </Button>
-                </Link>
-                <Link className="w-full" href={"/collection"}>
+                </Link> */}
+                <Link
+                  onClick={() => setIsOpen(false)}
+                  className="w-full"
+                  href={"/collection"}
+                >
                   <Button variant={"secondary"} className="w-full self-center">
                     <FileStack />
                     <p className="text-left w-full">My Collection</p>
@@ -70,7 +75,7 @@ export default function NavbarAccount({
                     className="w-[48%]"
                   >
                     <LogOut />
-                    <p className="w-full">Settings</p>
+                    <p className="w-full">Log Out</p>
                   </Button>
                 </div>
               </div>
@@ -78,10 +83,19 @@ export default function NavbarAccount({
           </Popover>
         ) : (
           <div className="flex gap-4">
-            <Link href={"/auth"}>
+            <Link className="block xs:block sm:block md:hidden" href={"/auth"}>
+              <Button variant={"outline"}>Auth</Button>
+            </Link>
+            <Link
+              className="hidden xs:hidden sm:hidden md:block"
+              href={"/auth"}
+            >
               <Button variant={"outline"}>Login</Button>
             </Link>
-            <Link href={"/auth?isSignUp=true"}>
+            <Link
+              className="hidden xs:hidden sm:hidden md:block"
+              href={"/auth?isSignUp=true"}
+            >
               <Button>Sign Up</Button>
             </Link>
           </div>
