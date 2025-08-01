@@ -22,7 +22,7 @@ export default function SearchBooksShelf({ data }: { data: Book[] }) {
           <div
             key={key}
             onClick={() => checkBookAndRedirect(book.id, router)}
-            className="w-[200px] mb-8 flex flex-col items-center cursor-pointer"
+            className="w-[200px] mb-8 flex flex-col items-center cursor-pointer bg-secondary p-2 rounded-lg"
           >
             <div className="relative h-[250px] w-[180px]">
               <Image
