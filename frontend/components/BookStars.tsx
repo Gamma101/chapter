@@ -57,10 +57,8 @@ export default function BookStars({
                 : "text-gray-300 cursor-pointer"
             }
             onClick={() => {
-              if (!rating) {
-                setRating(i)
-                submitRating(i)
-              }
+              setRating(i)
+              submitRating(i)
             }}
             data-testid={`star-${i}`}
           />
