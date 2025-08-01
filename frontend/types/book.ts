@@ -37,4 +37,5 @@ export type CollectionItem = {
   title: string
   authors: string
   thumbnailUrl: string
+  userRating: number
 }
