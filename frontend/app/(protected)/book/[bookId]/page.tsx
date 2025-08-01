@@ -1,15 +1,13 @@
 "use client"
-import AddBookToCollection from "@/components/AddBookToCollection"
+import BookCollectionInfo from "@/components/BookCollectionInfo"
 import BookComments from "@/components/BookComments"
 import BookInformation from "@/components/BookInformation"
 import BookPageSkeleton from "@/components/BookPageSkeleton"
 import UserCommentForm from "@/components/UserCommentForm"
 import { useAuth } from "@/context/AuthContext"
 import { useApi } from "@/hooks/useApi"
-import { deleteBookFromCollection } from "@/lib/bookUtils"
 import { BackendBook, Review } from "@/types/book"
 import axios from "axios"
-import { Delete, Loader2 } from "lucide-react"
 import { useTheme } from "next-themes"
 import Image from "next/image"
 import { useParams } from "next/navigation"
@@ -23,9 +21,7 @@ export default function BookPage() {
   const [reviews, setReviews] = useState<Review[] | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const theme = useTheme()
-  const [isBookInLibrary, setIsBookInLibrary] = useState(false)
   const { user } = useAuth()
-  const [isDeletingLoading, setIsDeletingloading] = useState(false)
 
   // Parse book information
   useEffect(() => {
@@ -59,25 +55,6 @@ export default function BookPage() {
     parseBookReviews()
   }, [bookId, user])
 
-  // Parse if user already added book to collection
-  useEffect(() => {
-    setIsDeletingloading(true)
-    const parseIsBookInCollection = async () => {
-      await api
-        .get(`http://localhost:5105/api/mylibrary/${bookId}`)
-        .then(() => {
-          setIsBookInLibrary(true)
-        })
-        .catch(() => {
-          setIsBookInLibrary(false)
-        })
-        .finally(() => {
-          setIsDeletingloading(false)
-        })
-    }
-    parseIsBookInCollection()
-  }, [bookId, api])
-
   return (
     <div className="flex items-center justify-center">
       {isLoading ? (
@@ -86,43 +63,11 @@ export default function BookPage() {
         <div className="w-full max-w-[90%] mx-auto px-4">
           {bookInfo && (
             <div className="flex flex-col lg:flex-row md:flex-row xl:flex-row xs:flex-col sm:flex-col gap-10">
-              <div className="flex items-center flex-col">
-                <Image
-                  alt="book"
-                  src={bookInfo.thumbnailUrl as string}
-                  width={300}
-                  height={500}
-                  unoptimized
-                  className="rounded-sm max-h-[500px]"
-                />
-                {isBookInLibrary ? (
-                  <div className="flex w-full justify-center items-center mt-3 gap-3">
-                    <p className="font-semibold p-3 bg-secondary rounded-lg">
-                      Book is in your library!
-                    </p>
-                    <div className="bg-secondary p-3 rounded-lg">
-                      {isDeletingLoading ? (
-                        <div className="animate-spin">
-                          <Loader2 />
-                        </div>
-                      ) : (
-                        <Delete
-                          onClick={() => {
-                            deleteBookFromCollection(api, bookId)
-                            setIsBookInLibrary(false)
-                          }}
-                          className="text-red-400"
-                        />
-                      )}
-                    </div>
-                  </div>
-                ) : (
-                  <AddBookToCollection
-                    setIsBookInLibrary={setIsBookInLibrary}
-                    bookId={bookId}
-                  />
-                )}
-              </div>
+              <BookCollectionInfo
+                bookId={bookId}
+                bookInfo={bookInfo}
+                api={api}
+              />
               <div className="w-full xl:w-[50%] lg:w-[50%] flex flex-col gap-5">
                 <BookInformation bookInfo={bookInfo} />
                 <UserCommentForm setReviews={setReviews} bookId={bookId} />
