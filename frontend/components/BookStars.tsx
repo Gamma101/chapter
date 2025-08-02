@@ -1,5 +1,7 @@
+import { useAuth } from "@/context/AuthContext"
 import { Axios } from "axios"
 import { Star } from "lucide-react"
+import { useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
 export default function BookStars({
@@ -10,6 +12,8 @@ export default function BookStars({
   api: Axios
 }) {
   const [rating, setRating] = useState<number | null>()
+  const router = useRouter()
+  const { user } = useAuth()
 
   useEffect(() => {
     const getUserRating = async () => {
@@ -26,6 +30,9 @@ export default function BookStars({
   }, [api, bookId])
 
   const submitRating = async (score: number) => {
+    if (!user?.userName) {
+      router.push("/auth")
+    }
     await api
       .put(`http://localhost:5105/api/books/${bookId}/rating`, { value: score })
       .then(() => {
