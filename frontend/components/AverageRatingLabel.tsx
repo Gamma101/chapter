@@ -51,7 +51,7 @@ export default function AverageRatingLabel({ bookId }: { bookId: string }) {
               {rating?.averageRating && rating?.averageRating.toFixed(2)}
             </span>
             {rating?.ratingsCount}{" "}
-            {rating && rating?.ratingsCount > 1 ? "ratings" : "rating"}
+            {rating && rating?.ratingsCount === 1 ? "rating" : "ratings"}
           </p>
         </div>
       </div>
