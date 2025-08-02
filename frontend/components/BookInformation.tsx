@@ -66,7 +66,7 @@ export default function BookInformation({
       </div>
       <div className="flex items-center gap-4">
         <Info size={30} />
-        <div className="">
+        <div>
           <p className="font-semibold">{bookInfo.pageCount} Pages</p>
           {bookInfo.publishedDate && bookInfo.publisher && (
             <p className="">

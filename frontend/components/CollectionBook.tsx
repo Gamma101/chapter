@@ -4,31 +4,37 @@ import { CollectionItem } from "@/types/book"
 import { Star } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import React, { ReactNode, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
+
+export const returnBookStatus = (status: string) => {
+  let result = { color: "", text: "" }
+  switch (status) {
+    case "WantToRead":
+      result = { color: "bg-blue-400", text: "Want to Read" }
+      break
+    case "Reading":
+      result = { color: "bg-amber-500", text: "Reading" }
+      break
+    case "Read":
+      result = { color: "bg-green-400", text: "Read" }
+      break
+    case "3": // will fix later because backend doesnt have third option yet
+      result = { color: "bg-red-400", text: "Dropped" }
+      break
+  }
+  return result
+}
 
 export default function CollectionBook({ book }: { book: CollectionItem }) {
   const router = useRouter()
-  const [bookStatus, setBookStatus] = useState<ReactNode | null>(null)
+  const [bookStatus, setBookStatus] = useState<{
+    color: string
+    text: string
+  } | null>(null)
 
   useEffect(() => {
-    switch (book.status) {
-      case "WantToRead":
-        setBookStatus(
-          <p className={"bg-blue-400 rounded-full px-4"}>Want to Read</p>
-        )
-        break
-      case "Reading":
-        setBookStatus(
-          <p className={"bg-amber-500 rounded-full px-4"}>Reading</p>
-        )
-        break
-      case "Read":
-        setBookStatus(<p className={"bg-green-400 rounded-full px-4"}>Read</p>)
-        break
-      case "3": // will fix later because backend doesnt have third option yet
-        setBookStatus(<p className={"bg-red-400 rounded-full px-4"}>Dropped</p>)
-        break
-    }
+    const stat = returnBookStatus(book.status)
+    setBookStatus(stat)
   }, [book])
   return (
     <div
@@ -64,7 +70,9 @@ export default function CollectionBook({ book }: { book: CollectionItem }) {
           )
         })}
       </div>
-      <div className="font-semibold">{bookStatus}</div>
+      <div className={cn("font-semibold rounded-full px-2", bookStatus?.color)}>
+        {bookStatus?.text}
+      </div>
     </div>
   )
 }
