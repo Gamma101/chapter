@@ -80,5 +80,15 @@ namespace backend.Repositories
         {
             return await _dbContext.UserLibraries.AnyAsync(x => x.UserId == userId && x.BookId == bookId);
         }
+
+        public async Task<UserLibrary> UpdateUserLibraryEntryAsync(string userId, string bookId, UpdateBookInLibraryDto libraryDto)
+        {
+            var exist = await _dbContext.UserLibraries.Include(ul => ul.Book).FirstOrDefaultAsync(ul => ul.UserId == userId && ul.BookId == bookId);
+            if (exist == null) { return null; }
+            exist.Status = libraryDto.ReadingStatus;
+            await _dbContext.SaveChangesAsync();
+            return exist;
+
+        }
     }
 }

@@ -51,22 +51,28 @@ namespace backend.Repositories
         public async Task<RatingInfoDto> GetRatingInfoAsync(string bookId)
         {
             var ratings = _dbContext.Ratings.Where(r => r.BookId == bookId);
-            if(!await ratings.AnyAsync())
+            var reviews = _dbContext.Reviews.Where(r => r.BookId == bookId);
+            var hasRating = await ratings.AnyAsync();
+            
+            if (!hasRating)
             {
+                var reviewsCount = await reviews.CountAsync();
                 return new RatingInfoDto
                 {
                     AverageRating = null,
-                    RatingsCount = 0
+                    RatingsCount = 0,
+                    ReviewsCount = reviewsCount
                 };
             }
-            var info = await ratings
-                .GroupBy(r => r.BookId)
-                .Select(a => new RatingInfoDto
-                {
-                    AverageRating = a.Average(r => r.Value),
-                    RatingsCount = a.Count()
-                })
-                .FirstOrDefaultAsync();
+            var avgRatingTask = await ratings.AverageAsync(r => r.Value);
+            var ratingCountTask = await ratings.CountAsync();
+            var reviewsCountTask =  await reviews.CountAsync();
+            var info = new RatingInfoDto
+            {
+                AverageRating = avgRatingTask,
+                RatingsCount = ratingCountTask,
+                ReviewsCount = reviewsCountTask
+            };
             return info;
         }
     }

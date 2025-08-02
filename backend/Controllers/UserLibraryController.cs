@@ -72,6 +72,18 @@ namespace backend.Controllers
             if (responseData == null) { return StatusCode(500); }
             return CreatedAtAction(nameof(GetUserLibraryEntry), new { bookId = responseData.BookId }, responseData);
         }
+        [HttpPut("{bookId}")]
+        [Authorize]
+        public async Task<IActionResult> Update([FromRoute] string bookId, [FromBody] UpdateBookInLibraryDto libraryDto)
+        {
+            if (!ModelState.IsValid) { return BadRequest(ModelState); }
+            var username = User.GetUsername();
+            var appUser = await _userManager.FindByNameAsync(username);
+            if (!await _userLibraryRepo.LibraryEntryExist(appUser.Id, bookId)) { return NotFound("You do not have this book in your library"); }
+            var updatedLib = await _userLibraryRepo.UpdateUserLibraryEntryAsync(appUser.Id, bookId, libraryDto);
+            if (updatedLib == null) { return NotFound("You do not have this book in your library"); }
+            return Ok(updatedLib.ToUserLibraryDto());
+        }
         [HttpDelete("{bookId}")]
         [Authorize]
         public async Task<IActionResult> Delete([FromRoute] string bookId)
