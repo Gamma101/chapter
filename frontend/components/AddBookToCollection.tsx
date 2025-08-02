@@ -8,7 +8,7 @@ import {
 } from "./ui/dialog"
 import { Button } from "./ui/button"
 import { useApi } from "@/hooks/useApi"
-import { PlusCircle } from "lucide-react"
+import { PlusCircle, RefreshCcw } from "lucide-react"
 import {
   Select,
   SelectContent,
@@ -25,9 +25,13 @@ import Link from "next/link"
 export default function AddBookToCollection({
   bookId,
   setIsBookInLibrary,
+  isUpdate = false,
+  parseIsBookInCollection,
 }: {
   bookId: string
   setIsBookInLibrary: React.Dispatch<React.SetStateAction<boolean>>
+  isUpdate?: boolean
+  parseIsBookInCollection: () => void
 }) {
   const api = useApi()
   const [isOpen, setIsOpen] = useState(false)
@@ -37,28 +41,42 @@ export default function AddBookToCollection({
     e.preventDefault()
     const formData = new FormData(e.target as HTMLFormElement)
     const readingStatus = Number(formData.get("status"))
-    await api
-      .post(`http://localhost:5105/api/mylibrary`, {
-        bookId,
+    if (isUpdate) {
+      await api.put(`http://localhost:5105/api/mylibrary/${bookId}`, {
         readingStatus,
       })
-      .then(() => {
-        setIsOpen(false)
-        setIsBookInLibrary(true)
-      })
-      .catch((e) => {
-        console.log(e)
-      })
+    } else {
+      await api
+        .post(`http://localhost:5105/api/mylibrary`, {
+          bookId,
+          readingStatus,
+        })
+        .then(() => {
+          setIsOpen(false)
+          setIsBookInLibrary(true)
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+    }
+    parseIsBookInCollection()
   }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       {user?.userName ? (
         <DialogTrigger className="w-[80%]" asChild>
-          <Button className=" mt-5">
-            <PlusCircle />
-            <p>Add to collection</p>
-          </Button>
+          {isUpdate ? (
+            <div className="flex gap-2 items-center cursor-pointer text-lg px-2 bg-blue-400 rounded-full">
+              <RefreshCcw size={20} />
+              <p>Update</p>
+            </div>
+          ) : (
+            <Button className=" mt-5">
+              <PlusCircle />
+              <p>Add to collection</p>
+            </Button>
+          )}
         </DialogTrigger>
       ) : (
         <Link href={"/auth"}>
@@ -93,8 +111,12 @@ export default function AddBookToCollection({
               </SelectContent>
             </Select>
           </div>
-          <Button className="w-[50%] mx-auto mt-4" type="submit">
-            Save changes
+          <Button
+            onClick={() => setIsOpen(false)}
+            className="w-[50%] mx-auto mt-4"
+            type="submit"
+          >
+            {isUpdate ? "Save changes" : "Submit"}
           </Button>
         </form>
       </DialogContent>
