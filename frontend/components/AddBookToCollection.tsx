@@ -19,6 +19,8 @@ import {
   SelectValue,
 } from "./ui/select"
 import { Label } from "./ui/label"
+import { useAuth } from "@/context/AuthContext"
+import Link from "next/link"
 
 export default function AddBookToCollection({
   bookId,
@@ -29,6 +31,7 @@ export default function AddBookToCollection({
 }) {
   const api = useApi()
   const [isOpen, setIsOpen] = useState(false)
+  const { user } = useAuth()
 
   const handleAddBook = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -50,12 +53,18 @@ export default function AddBookToCollection({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger className="w-[80%]" asChild>
-        <Button className=" mt-5">
-          <PlusCircle />
-          <p>Add to collection</p>
-        </Button>
-      </DialogTrigger>
+      {user?.userName ? (
+        <DialogTrigger className="w-[80%]" asChild>
+          <Button className=" mt-5">
+            <PlusCircle />
+            <p>Add to collection</p>
+          </Button>
+        </DialogTrigger>
+      ) : (
+        <Link href={"/auth"}>
+          <Button className="mt-5">Sign In to rate & save books</Button>
+        </Link>
+      )}
       <DialogContent className="sm:max-w-[425px] bg-secondary">
         <form
           onSubmit={handleAddBook}
