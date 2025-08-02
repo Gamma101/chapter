@@ -48,7 +48,7 @@ export default function AverageRatingLabel({ bookId }: { bookId: string }) {
           <p className="flex items-center">
             {" "}
             <span className="text-xl font-semibold mr-2">
-              {rating?.averageRating.toFixed(2)}
+              {rating?.averageRating && rating?.averageRating.toFixed(2)}
             </span>
             {rating?.ratingsCount}{" "}
             {rating && rating?.ratingsCount > 1 ? "ratings" : "rating"}
