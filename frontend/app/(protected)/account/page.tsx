@@ -1,15 +1,10 @@
 "use client"
-import { Button } from "@/components/ui/button"
 import { User } from "@/types/User"
 import { User2 } from "lucide-react"
-import { useTheme } from "next-themes"
-import Image from "next/image"
-import Link from "next/link"
 import React, { useEffect, useState } from "react"
 
 export default function Account() {
   const [user, setUser] = useState<User | null>(null)
-  const pageMode = useTheme()
 
   useEffect(() => {
     const userData = localStorage.getItem("user")
@@ -28,25 +23,6 @@ export default function Account() {
           </div>
         </div>
       )}
-      <div className="bg-secondary m-auto gap-2 mt-20 flex items-center flex-col justify-center h-[40vh] rounded-lg w-[50%]">
-        <Image
-          className="w-60 h-60"
-          src={
-            pageMode.theme === "light" ? "/empty-white.svg" : "/empty-dark.svg"
-          }
-          width={100}
-          height={100}
-          alt="empty"
-        />
-        <p className="text-xl">
-          It seems that you don&apos;t have any books yet
-        </p>
-        <Link href={"/search"}>
-          <Button className="p-5 text-lg cursor-pointer">
-            Search for book
-          </Button>
-        </Link>
-      </div>
     </div>
   )
 }
