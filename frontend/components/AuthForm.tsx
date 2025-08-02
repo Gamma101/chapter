@@ -36,7 +36,7 @@ export default function AuthForm({ isSignUp }: { isSignUp: boolean }) {
       })
       .then((data) => {
         login(data.data)
-        router.push("/account")
+        router.push("/collection")
       })
       .catch((error) => {
         setError(error.response.data[0].description)
@@ -83,8 +83,8 @@ export default function AuthForm({ isSignUp }: { isSignUp: boolean }) {
     }
   }
   return (
-    <div className="bg-secondary p-10 rounded-lg flex gap-10 h-[75%]">
-      <div className=" bg-[url('/black-books.jpg')] lg:flex md:flex xl:flex sm:hidden bg-cover bg-center p-5 flex flex-col justify-center rounded-lg">
+    <div className="bg-secondary p-10 rounded-lg flex gap-10 h-[75%] m-10">
+      <div className="hidden xs:hidden sm:flex md:flex bg-[url('/black-books.jpg')] bg-cover bg-center p-5 flex-col justify-center rounded-lg">
         <h1 className="text-5xl text-white font-bold">Welcome to Chapter!</h1>
         <p className="text-2xl text-white w-[75%] mt-2">
           Please provide your information for successfull{" "}

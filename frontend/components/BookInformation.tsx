@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils"
 import { BackendBook } from "@/types/book"
 import { ArrowDownIcon, Info } from "lucide-react"
 import React, { useEffect, useRef, useState } from "react"
+import AverageRatingLabel from "./AverageRatingLabel"
 
 export default function BookInformation({
   bookInfo,
@@ -37,6 +38,7 @@ export default function BookInformation({
           ))}
         </div>
       </div>
+      <AverageRatingLabel bookId={bookInfo.id} />
       <div>
         <p className="font-bold text-xl">Description</p>
         <div

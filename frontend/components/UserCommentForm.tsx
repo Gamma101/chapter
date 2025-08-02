@@ -9,6 +9,8 @@ import Comment from "./Comment"
 import { useAuth } from "@/context/AuthContext"
 import useWindowWidth from "@/hooks/useWindowWidth"
 import CommentMobile from "./CommentMobile"
+import { Button } from "./ui/button"
+import Link from "next/link"
 
 export default function UserCommentForm({
   bookId,
@@ -101,13 +103,19 @@ export default function UserCommentForm({
               />
             </Label>
 
-            <LoadingButton
-              isLoading={isLoading}
-              onClick={submitComment}
-              className="w-1/2 self-center"
-            >
-              Submit
-            </LoadingButton>
+            {user?.userName ? (
+              <LoadingButton
+                isLoading={isLoading}
+                onClick={submitComment}
+                className="w-1/2 self-center"
+              >
+                Submit
+              </LoadingButton>
+            ) : (
+              <Link className="w-1/2 self-center" href={"auth"}>
+                <Button className="w-full">Sign In to leave review</Button>
+              </Link>
+            )}
           </div>
         </div>
       )}
