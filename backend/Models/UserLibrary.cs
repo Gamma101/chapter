@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Chapter.Models
 {
-    public enum ReadingStatus { WantToRead, Reading, Read }
+    public enum ReadingStatus { WantToRead, Reading, Read, Dropped }
     [Table("UserLibraries")]
     public class UserLibrary
     {
