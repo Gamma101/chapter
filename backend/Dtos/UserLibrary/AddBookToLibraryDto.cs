@@ -6,8 +6,7 @@ namespace backend.Dtos.UserLibrary
     public class AddBookToLibraryDto
     {
         public string BookId { get; set; }
-
-        [Range(0, 2)]
+        [Range(0, 3)]
         public ReadingStatus? ReadingStatus { get; set; }
     }
 }
