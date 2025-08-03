@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react"
 type Rating = {
   ratingsCount: number
   averageRating: number
+  reviewsCount: number
 }
 
 export default function AverageRatingLabel({ bookId }: { bookId: string }) {
@@ -30,30 +31,35 @@ export default function AverageRatingLabel({ bookId }: { bookId: string }) {
   return (
     <div>
       <p className="font-bold text-xl item">Rating</p>
-      <div className="flex gap-1 items-center">
-        {[1, 2, 3, 4, 5].map((el) => {
-          return (
-            <Star
-              className={cn(
-                rating && rating?.averageRating > el - 1
-                  ? "text-amber-300"
-                  : "text-accent-foreground"
-              )}
-              size={35}
-              key={el}
-            />
-          )
-        })}
+      <div className="flex flex-col sm:flex-row gap-1 items-center">
+        <div className="flex">
+          {[1, 2, 3, 4, 5].map((el) => {
+            return (
+              <Star
+                className={cn(
+                  rating && rating?.averageRating > el - 1
+                    ? "text-amber-300"
+                    : "text-gray-300"
+                )}
+                size={35}
+                key={el}
+              />
+            )
+          })}
+        </div>
         <div className=" flex-row flex gap-3 items-center">
-          <p className="flex items-center">
-            {" "}
-            <span className="text-xl font-semibold mr-2">
-              {rating?.averageRating && rating?.averageRating.toFixed(2)}
-            </span>
-            {rating?.ratingsCount}{" "}
-            {rating && rating?.ratingsCount === 1 ? "rating" : "ratings"}
+          <p className="text-xl font-semibold mr-2">
+            {rating?.averageRating && rating?.averageRating.toFixed(2)}
           </p>
         </div>
+        <p className="flex items-center">
+          {" "}
+          {rating?.ratingsCount}{" "}
+          {rating && rating?.ratingsCount === 1 ? "rating" : "ratings"}
+          {" • "}
+          {rating?.reviewsCount}{" "}
+          {rating && rating?.reviewsCount === 1 ? "review" : "reviews"}
+        </p>
       </div>
     </div>
   )
