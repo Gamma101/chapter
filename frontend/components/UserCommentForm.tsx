@@ -112,7 +112,7 @@ export default function UserCommentForm({
                 Submit
               </LoadingButton>
             ) : (
-              <Link className="w-1/2 self-center" href={"auth"}>
+              <Link className="w-1/2 self-center" href={"/auth"}>
                 <Button className="w-full">Sign In to leave review</Button>
               </Link>
             )}

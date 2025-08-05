@@ -38,9 +38,6 @@ export default function EditCommentDialog({
         setOpen(false)
         setReviewData((prev) => (prev ? { ...prev, title, content } : prev))
       })
-      .catch((e) => {
-        console.log(e)
-      })
   }
 
   const backInputs = () => {

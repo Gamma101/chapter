@@ -16,25 +16,15 @@ export const checkBookAndRedirect = async (
   bookId: string,
   router: AppRouterInstance
 ) => {
-  await axios
-    .get(`http://localhost:5105/api/Books/${bookId}`)
-    .then((data) => {
-      router.push(`book/${data.data.id}`)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+  await axios.get(`http://localhost:5105/api/Books/${bookId}`).then((data) => {
+    router.push(`book/${data.data.id}`)
+  })
 }
 
 export const deleteBookFromCollection = async (api: Axios, bookId: string) => {
-  await api
-    .delete(`http://localhost:5105/api/mylibrary/${bookId}`)
-    .then(() => {
-      console.log("Successfully deleted book froom collection")
-    })
-    .catch((e) => {
-      console.log(e)
-    })
+  await api.delete(`http://localhost:5105/api/mylibrary/${bookId}`).then(() => {
+    // console.log("Successfully deleted book froom collection")
+  })
 }
 
 export const deleteComment = async (
