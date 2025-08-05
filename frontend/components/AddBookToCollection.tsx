@@ -55,9 +55,6 @@ export default function AddBookToCollection({
           setIsOpen(false)
           setIsBookInLibrary(true)
         })
-        .catch((e) => {
-          console.log(e)
-        })
     }
     parseIsBookInCollection()
   }

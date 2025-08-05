@@ -33,22 +33,17 @@ export default function BookStars({
     if (!user?.userName) {
       router.push("/auth")
     }
-    await api
-      .put(`http://localhost:5105/api/books/${bookId}/rating`, { value: score })
-      .then(() => {
-        console.log("Rating submitted!")
-      })
-      .catch((e) => console.log(e))
+    await api.put(`http://localhost:5105/api/books/${bookId}/rating`, {
+      value: score,
+    })
   }
 
   const handleRemoveRating = async () => {
     await api
       .delete(`http://localhost:5105/api/books/${bookId}/rating`)
-      .then((d) => {
-        console.log(d)
+      .then(() => {
         setRating(0)
       })
-      .catch((e) => console.log(e))
   }
 
   return (

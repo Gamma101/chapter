@@ -12,18 +12,12 @@ type Rating = {
 export default function AverageRatingLabel({ bookId }: { bookId: string }) {
   const [rating, setRating] = useState<Rating | null>(null)
 
-  console.log()
-
   useEffect(() => {
     const getAvgRating = async () => {
       await axios
         .get(`http://localhost:5105/api/books/${bookId}/rating/info`)
         .then((data) => {
           setRating(data.data)
-          console.log(data.data)
-        })
-        .catch((e) => {
-          console.log(e)
         })
     }
     getAvgRating()

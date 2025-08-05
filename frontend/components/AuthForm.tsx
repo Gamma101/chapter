@@ -63,7 +63,7 @@ export default function AuthForm({ isSignUp }: { isSignUp: boolean }) {
       .then((data) => {
         if (data.data) {
           login(data.data)
-          router.push("/account")
+          router.push("/collection")
         }
       })
       .catch((error) => {
