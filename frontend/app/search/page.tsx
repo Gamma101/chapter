@@ -7,9 +7,9 @@ import { LucideLoaderPinwheel } from "lucide-react"
 import { useTheme } from "next-themes"
 import Image from "next/image"
 import { useSearchParams } from "next/navigation"
-import React, { useEffect, useState } from "react"
+import React, { Suspense, useEffect, useState } from "react"
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams()
   const query = searchParams.get("q")
   const googleAPIKey = process.env.NEXT_PUBLIC_GOOGLE_BOOKS_API_KEY
@@ -94,5 +94,19 @@ export default function SearchPage() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex justify-center">
+          <LucideLoaderPinwheel className="animate-spin" size={60} />
+        </div>
+      }
+    >
+      <SearchContent />
+    </Suspense>
   )
 }
