@@ -82,7 +82,8 @@ namespace backend.Controllers
             if (!await _userLibraryRepo.LibraryEntryExist(appUser.Id, bookId)) { return NotFound("You do not have this book in your library"); }
             var updatedLib = await _userLibraryRepo.UpdateUserLibraryEntryAsync(appUser.Id, bookId, libraryDto);
             if (updatedLib == null) { return NotFound("You do not have this book in your library"); }
-            return Ok(updatedLib.ToUserLibraryDto());
+            var finalDto = await _userLibraryRepo.GetUserLibraryEntryAsync(appUser.Id, bookId);
+            return Ok(finalDto);
         }
         [HttpDelete("{bookId}")]
         [Authorize]

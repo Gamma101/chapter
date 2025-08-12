@@ -29,7 +29,7 @@ namespace backend.Controllers
             {
                 return NotFound("Review is not found for this book.");
             }
-            return Ok(review.ToReviewDto());
+            return Ok(review);
         }
         [HttpPut("{reviewId:int}")]
         [Authorize]
@@ -43,8 +43,8 @@ namespace backend.Controllers
             if (review == null) { return NotFound("Review is not found"); }
             var reviewFromDb = await _reviewRepo.GetByIdAsync(reviewId);
 
-            if (reviewFromDb.UserId != appUser.Id) { return Forbid(); }
-            return Ok(review.ToReviewDto());
+            if (reviewFromDb.CreatedBy != appUser.UserName) { return Forbid(); }
+            return Ok(reviewFromDb);
         }
         [HttpDelete("{reviewId:int}")]
         [Authorize]
@@ -58,7 +58,7 @@ namespace backend.Controllers
                 return NotFound("Review is not found for this book.");
             }
 
-            if (reviewFromDb.UserId != appUser.Id) { return Forbid(); }
+            if (reviewFromDb.CreatedBy != appUser.UserName) { return Forbid(); }
 
             var reviewModel = await _reviewRepo.DeleteAsync(reviewId);
             if (reviewModel == null) { return NotFound("Review is not found for this book."); }
