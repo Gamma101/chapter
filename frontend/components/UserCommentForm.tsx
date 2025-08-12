@@ -28,7 +28,7 @@ export default function UserCommentForm({
 
   const getUserReview = useCallback(async () => {
     await api
-      .get(`http://localhost:5105/api/books/${bookId}/reviews`)
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books/${bookId}/reviews`)
       .then((data) => {
         const userComm = data.data.filter(
           (rev: Review) => rev.createdBy === user?.userName
@@ -43,10 +43,13 @@ export default function UserCommentForm({
   const submitComment = async () => {
     setIsLoading(true)
     await api
-      .post(`http://localhost:5105/api/books/${bookId}/reviews`, {
-        title,
-        content,
-      })
+      .post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books/${bookId}/reviews`,
+        {
+          title,
+          content,
+        }
+      )
       .then(() => {
         setTitle("")
         setContent("")

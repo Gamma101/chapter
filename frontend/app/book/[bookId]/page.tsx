@@ -27,7 +27,7 @@ export default function BookPage() {
   useEffect(() => {
     const parseBookInfo = async () => {
       await axios
-        .get(`http://localhost:5105/api/Books/${bookId}`)
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Books/${bookId}`)
         .then((data) => {
           setBookInfo(data.data)
         })
@@ -44,7 +44,9 @@ export default function BookPage() {
     if (!user) return
     const parseBookReviews = async () => {
       await axios
-        .get(`http://localhost:5105/api/books/${bookId}/reviews`)
+        .get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books/${bookId}/reviews`
+        )
         .then((data) => {
           setReviews(
             data.data.filter((rev: Review) => rev.createdBy !== user?.userName)

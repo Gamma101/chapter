@@ -29,7 +29,7 @@ export default function AuthForm({ isSignUp }: { isSignUp: boolean }) {
     }
     setIsLoading(true)
     await axios
-      .post("http://localhost:5105/api/account/register", {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/account/register`, {
         username,
         email,
         password,
@@ -56,7 +56,7 @@ export default function AuthForm({ isSignUp }: { isSignUp: boolean }) {
     }
     setIsLoading(true)
     await axios
-      .post("http://localhost:5105/api/account/login", {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/account/login`, {
         username,
         password,
       })

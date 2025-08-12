@@ -21,7 +21,7 @@ export default function Collection() {
   useEffect(() => {
     const fetchUserCollection = async () => {
       await axios
-        .get(`http://localhost:5105/api/mylibrary`, {
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mylibrary`, {
           headers: {
             Authorization: `Bearer ${user?.token}`,
           },

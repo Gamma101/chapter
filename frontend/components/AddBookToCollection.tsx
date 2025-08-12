@@ -42,12 +42,15 @@ export default function AddBookToCollection({
     const formData = new FormData(e.target as HTMLFormElement)
     const readingStatus = Number(formData.get("status"))
     if (isUpdate) {
-      await api.put(`http://localhost:5105/api/mylibrary/${bookId}`, {
-        readingStatus,
-      })
+      await api.put(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mylibrary/${bookId}`,
+        {
+          readingStatus,
+        }
+      )
     } else {
       await api
-        .post(`http://localhost:5105/api/mylibrary`, {
+        .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mylibrary`, {
           bookId,
           readingStatus,
         })

@@ -30,7 +30,7 @@ export default function EditCommentDialog({
 
   const changeBookReview = async () => {
     await api
-      .put(`http://localhost:5105/api/reviews/${review.id}`, {
+      .put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/reviews/${review.id}`, {
         title,
         content,
       })

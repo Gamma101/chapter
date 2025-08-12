@@ -15,7 +15,9 @@ export default function AverageRatingLabel({ bookId }: { bookId: string }) {
   useEffect(() => {
     const getAvgRating = async () => {
       await axios
-        .get(`http://localhost:5105/api/books/${bookId}/rating/info`)
+        .get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books/${bookId}/rating/info`
+        )
         .then((data) => {
           setRating(data.data)
         })

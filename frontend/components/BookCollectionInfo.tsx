@@ -28,7 +28,7 @@ export default function BookCollectionInfo({
 
   const parseIsBookInCollection = useCallback(async () => {
     await api
-      .get(`http://localhost:5105/api/mylibrary/${bookId}`)
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mylibrary/${bookId}`)
       .then((data) => {
         setIsBookInLibrary(true)
         setStatusInfo(data.data)

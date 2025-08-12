@@ -18,7 +18,9 @@ export default function BookStars({
   useEffect(() => {
     const getUserRating = async () => {
       await api
-        .get(`http://localhost:5105/api/books/${bookId}/rating/my`)
+        .get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books/${bookId}/rating/my`
+        )
         .then((data) => {
           setRating(data.data.value)
         })
@@ -33,14 +35,19 @@ export default function BookStars({
     if (!user?.userName) {
       router.push("/auth")
     }
-    await api.put(`http://localhost:5105/api/books/${bookId}/rating`, {
-      value: score,
-    })
+    await api.put(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books/${bookId}/rating`,
+      {
+        value: score,
+      }
+    )
   }
 
   const handleRemoveRating = async () => {
     await api
-      .delete(`http://localhost:5105/api/books/${bookId}/rating`)
+      .delete(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books/${bookId}/rating`
+      )
       .then(() => {
         setRating(0)
       })

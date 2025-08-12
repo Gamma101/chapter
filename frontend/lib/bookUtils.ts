@@ -16,15 +16,19 @@ export const checkBookAndRedirect = async (
   bookId: string,
   router: AppRouterInstance
 ) => {
-  await axios.get(`http://localhost:5105/api/Books/${bookId}`).then((data) => {
-    router.push(`book/${data.data.id}`)
-  })
+  await axios
+    .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Books/${bookId}`)
+    .then((data) => {
+      router.push(`book/${data.data.id}`)
+    })
 }
 
 export const deleteBookFromCollection = async (api: Axios, bookId: string) => {
-  await api.delete(`http://localhost:5105/api/mylibrary/${bookId}`).then(() => {
-    // console.log("Successfully deleted book froom collection")
-  })
+  await api
+    .delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mylibrary/${bookId}`)
+    .then(() => {
+      // console.log("Successfully deleted book froom collection")
+    })
 }
 
 export const deleteComment = async (
@@ -33,7 +37,7 @@ export const deleteComment = async (
   setUserReview: React.Dispatch<React.SetStateAction<Review | null>>
 ) => {
   await api
-    .delete(`http://localhost:5105/api/reviews/${reviewId}`)
+    .delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/reviews/${reviewId}`)
     .then(() => {
       if (typeof setUserReview === "function") {
         setUserReview(null)
