@@ -1,7 +1,7 @@
 import { Label } from "@radix-ui/react-dropdown-menu"
 import { Input } from "./ui/input"
 import { Textarea } from "./ui/textarea"
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { useApi } from "@/hooks/useApi"
 import { Review } from "@/types/book"
 import LoadingButton from "./LoadingButton"
@@ -26,7 +26,7 @@ export default function UserCommentForm({
   const { user } = useAuth()
   const width = useWindowWidth()
 
-  const getUserReview = async () => {
+  const getUserReview = useCallback(async () => {
     await api
       .get(`http://localhost:5105/api/books/${bookId}/reviews`)
       .then((data) => {
@@ -38,7 +38,7 @@ export default function UserCommentForm({
         }
       })
       .catch(() => {})
-  }
+  }, [api, bookId, user])
 
   const submitComment = async () => {
     setIsLoading(true)
@@ -58,7 +58,7 @@ export default function UserCommentForm({
 
   useEffect(() => {
     getUserReview()
-  }, [user])
+  }, [getUserReview])
 
   return (
     <div>

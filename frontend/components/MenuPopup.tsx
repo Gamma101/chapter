@@ -4,7 +4,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { FileStack, Home, LucideBookUser, MenuIcon, Search } from "lucide-react"
+import { Home, LucideBookUser, MenuIcon, Search } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 
