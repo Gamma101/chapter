@@ -63,6 +63,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(option =>
     option.Password.RequireDigit = true;
     option.Password.RequireUppercase = true;
     option.Password.RequiredLength = 6;
+    option.Password.RequireNonAlphanumeric = false;
 })
 .AddEntityFrameworkStores<AppDBContext>();
 

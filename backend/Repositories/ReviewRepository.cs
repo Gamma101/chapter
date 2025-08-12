@@ -1,4 +1,5 @@
-﻿using backend.Interfaces;
+﻿using backend.Dtos.Reviews;
+using backend.Interfaces;
 using backend.Models;
 using Chapter.Data;
 using Chapter.Models;
@@ -16,14 +17,50 @@ namespace backend.Repositories
             _dbContext = dBContext;
 
         }
-        public async Task<Review?> GetByIdAsync(int id)
+        public async Task<ReviewDto?> GetByIdAsync(int id)
         {
-            return await _dbContext.Reviews.Include(u => u.User).FirstOrDefaultAsync(r => r.Id == id);
+            var rev = await _dbContext.Reviews.FindAsync(id);
+            if (rev == null) { return null; }
+            var bookId = rev.BookId;
+
+            return await _dbContext.Reviews
+                .Include(u => u.User)
+                .Where(r => r.Id == id)
+                .Select(r => new ReviewDto
+                {
+                    Id = r.Id,
+                    Title = r.Title,
+                    Content = r.Content,
+                    CreatedAt = r.CreatedAt,
+                    UpdatedAt = r.UpdatedAt,
+                    CreatedBy = r.User.UserName,
+                    UserRating = _dbContext.Ratings
+                        .Where(rt => rt.BookId == r.BookId && rt.UserId == r.UserId)
+                        .Select(rt => rt.Value)
+                        .FirstOrDefault()
+                })
+                .FirstOrDefaultAsync();
         }
 
-        public async Task<List<Review>> GetAllByBookIdAsync(string id)
+        public async Task<List<ReviewDto>> GetAllByBookIdAsync(string bookId)
         {
-            return await _dbContext.Reviews.Include(u => u.User).Where(b => b.BookId == id).ToListAsync();
+            return await _dbContext.Reviews
+                .Include(u => u.User)
+                .Where(r => r.BookId == bookId)
+                .Select(r => new ReviewDto
+                {
+                    Id = r.Id,
+                    Title = r.Title,
+                    Content = r.Content,
+                    CreatedAt = r.CreatedAt,
+                    UpdatedAt = r.UpdatedAt,
+                    CreatedBy = r.User.UserName,
+                    UserRating = _dbContext.Ratings
+                        .Where(rt => rt.BookId == bookId && rt.UserId == r.UserId)
+                        .Select(rt => rt.Value)
+                        .FirstOrDefault()
+                })
+                .ToListAsync();
         }
 
 

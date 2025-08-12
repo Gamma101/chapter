@@ -28,8 +28,7 @@ namespace backend.Controllers
             if (!ModelState.IsValid) { return BadRequest(ModelState); }
             var reviews = await _reviewRepo.GetAllByBookIdAsync(bookId);
             if (reviews == null || reviews.Count == 0) { return NotFound("Reviews are not found for this book."); }
-            var reviewsDto = reviews.Select(r => r.ToReviewDto());
-            return Ok(reviewsDto);
+            return Ok(reviews);
         }
 
 
@@ -45,10 +44,17 @@ namespace backend.Controllers
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
 
+     
+
             var reviewModel = reviewDto.ToReviewFromCreate(bookId);
             reviewModel.UserId = appUser.Id.ToString();
+          
             await _reviewRepo.CreateAsync(reviewModel);
-            return CreatedAtRoute("GetReviewById", new { reviewId = reviewModel.Id }, reviewModel.ToReviewDto());
+
+            var finalReviewDto = await _reviewRepo.GetByIdAsync(reviewModel.Id);
+            if (finalReviewDto == null) { return StatusCode(500, "Can not find created review."); }
+
+            return CreatedAtRoute("GetReviewById", new { reviewId = finalReviewDto.Id }, finalReviewDto);
         }
         
         

@@ -11,6 +11,7 @@ namespace backend.Dtos.Reviews
 
         public DateTime? UpdatedAt { get; set; }
         public string CreatedBy { get; set;} = string.Empty;
+        public int? UserRating { get; set; }
 
     }
 }
