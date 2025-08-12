@@ -5,7 +5,7 @@ import { Button } from "./ui/button"
 import {
   FileStack,
   LogOut,
-  Settings2Icon,
+  // Settings2Icon,
   User,
   // UserCheck2,
 } from "lucide-react"
@@ -62,20 +62,21 @@ export default function NavbarAccount({
                   </Button>
                 </Link>
 
-                <div className="flex justify-between w-full ">
-                  <Link className="w-[48%]" href={"/settings"}>
+                <div className="w-full">
+                  {/* <Link className="w-[48%]" href={"/settings"}>
                     <Button variant={"secondary"} className="w-full">
                       <Settings2Icon />
                       <p className="w-full">Settings</p>
                     </Button>
-                  </Link>
+                  </Link> */}
                   <Button
                     onClick={logout}
                     variant={"destructive"}
-                    className="w-[48%]"
+                    // className="w-[48%]"
+                    className="w-full flex items-center justify-start"
                   >
                     <LogOut />
-                    <p className="w-full">Log Out</p>
+                    <p>Log Out</p>
                   </Button>
                 </div>
               </div>

@@ -18,7 +18,7 @@ export const returnBookStatus = (status: string) => {
     case "Read":
       result = { color: "bg-green-400", text: "Read" }
       break
-    case "3": // will fix later because backend doesnt have third option yet
+    case "Dropped": // will fix later because backend doesnt have third option yet
       result = { color: "bg-red-400", text: "Dropped" }
       break
   }

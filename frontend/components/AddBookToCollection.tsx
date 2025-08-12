@@ -55,9 +55,6 @@ export default function AddBookToCollection({
           setIsOpen(false)
           setIsBookInLibrary(true)
         })
-        .catch((e) => {
-          console.log(e)
-        })
     }
     parseIsBookInCollection()
   }
@@ -89,7 +86,9 @@ export default function AddBookToCollection({
           className="w-full flex flex-col items-center justify-center"
         >
           <DialogHeader>
-            <DialogTitle>Add book to your collection</DialogTitle>
+            <DialogTitle>
+              {isUpdate ? "Update book status" : "Add book to your collection"}
+            </DialogTitle>
           </DialogHeader>
           <div className="gap-2 flex items-center flex-col mt-4">
             <Label htmlFor="statusSelect">Book status</Label>
