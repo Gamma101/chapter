@@ -46,7 +46,6 @@ export default function BookPage() {
       await axios
         .get(`http://localhost:5105/api/books/${bookId}/reviews`)
         .then((data) => {
-          console.log(data.data)
           setReviews(
             data.data.filter((rev: Review) => rev.createdBy !== user?.userName)
           )

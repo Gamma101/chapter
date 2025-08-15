@@ -73,15 +73,22 @@ export default function CommentMobile({
           </div>
           <p className="text-2xl font-semibold">{reviewData.title}</p>
           <p className="">{reviewData.content}</p>
-        </div>
-        <div className="">
-          <div className="flex flex-row items-center justify-between gap-2">
-            <ThumbsUp className="text-green-400" />
-            <p className="dark:bg-stone-400 bg-stone-300 px-4 rounded-lg font-bold">
-              0
+          {reviewData.updatedAt && (
+            <p className="text-sm mt-5 text-gray-400">
+              Last updated {new Date(reviewData.updatedAt).toLocaleDateString()}
             </p>
-            <ThumbsDown className="text-red-400" />
-          </div>
+          )}
+          <p className="text-sm text-gray-400">
+            Review created {new Date(reviewData.createdAt).toLocaleDateString()}
+          </p>
+        </div>
+
+        <div className="flex flex-row items-center justify-between gap-2">
+          <ThumbsUp className="text-green-400" />
+          <p className="dark:bg-stone-400 bg-stone-300 px-4 rounded-lg font-bold">
+            0
+          </p>
+          <ThumbsDown className="text-red-400" />
         </div>
       </div>
     </div>

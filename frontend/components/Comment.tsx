@@ -66,6 +66,14 @@ export default function Comment({
           </div>
           <p className="text-2xl font-semibold">{reviewData.title}</p>
           <p className="">{reviewData.content}</p>
+          {reviewData.updatedAt && (
+            <p className="text-sm mt-5 text-gray-400">
+              Last updated {new Date(reviewData.updatedAt).toLocaleDateString()}
+            </p>
+          )}
+          <p className="text-sm text-gray-400">
+            Review created {new Date(reviewData.createdAt).toLocaleDateString()}
+          </p>
         </div>
       </div>
       <div className="flex flex-col items-center justify-between gap-2">
