@@ -58,7 +58,7 @@ export default function CommentMobile({
           )}
         </div>
 
-        <div className="wrap-anywhere">
+        <div className="wrap-anywhere w-[90%]">
           <div className="flex space-x-1">
             {[0, 1, 2, 3, 4].map((el) => {
               return (
@@ -74,12 +74,14 @@ export default function CommentMobile({
           <p className="text-2xl font-semibold">{reviewData.title}</p>
           <p className="">{reviewData.content}</p>
         </div>
-        <div className="flex flex-row items-center justify-between gap-2">
-          <ThumbsUp className="text-green-400" />
-          <p className="dark:bg-stone-400 bg-stone-300 px-4 rounded-lg font-bold">
-            0
-          </p>
-          <ThumbsDown className="text-red-400" />
+        <div className="">
+          <div className="flex flex-row items-center justify-between gap-2">
+            <ThumbsUp className="text-green-400" />
+            <p className="dark:bg-stone-400 bg-stone-300 px-4 rounded-lg font-bold">
+              0
+            </p>
+            <ThumbsDown className="text-red-400" />
+          </div>
         </div>
       </div>
     </div>
