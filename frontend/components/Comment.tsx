@@ -1,10 +1,11 @@
 import { useAuth } from "@/context/AuthContext"
 import { useApi } from "@/hooks/useApi"
 import { Review } from "@/types/book"
-import { ThumbsDown, ThumbsUp, Trash2, User2 } from "lucide-react"
+import { Star, ThumbsDown, ThumbsUp, Trash2, User2 } from "lucide-react"
 import React, { useState } from "react"
 import EditCommentDialog from "./EditCommentDialog"
 import { deleteComment } from "@/lib/bookUtils"
+import { cn } from "@/lib/utils"
 
 export default function Comment({
   review,
@@ -51,6 +52,18 @@ export default function Comment({
         </div>
 
         <div className="wrap-anywhere">
+          <div className="flex space-x-1">
+            {[0, 1, 2, 3, 4].map((el) => {
+              return (
+                <Star
+                  className={cn(
+                    el < review.userRating ? "text-yellow-400" : "text-gray-500"
+                  )}
+                  key={el}
+                />
+              )
+            })}
+          </div>
           <p className="text-2xl font-semibold">{reviewData.title}</p>
           <p className="">{reviewData.content}</p>
         </div>

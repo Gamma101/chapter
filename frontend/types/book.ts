@@ -28,6 +28,7 @@ export type Review = {
   createdAt: string
   updatedAt: string
   createdBy: string
+  userRating: number
 }
 
 export type CollectionItem = {
