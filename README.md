@@ -3,6 +3,7 @@
 # 📚 Chapter — Платформа управления личной библиотекой
 
 ![Демонтсрация Chapter](https://youtu.be/ALuSnsIvsb8)
+[![Демо приложения](https://img.youtube.com/vi/ALuSnsIvsb8/maxresdefault.jpg)](https://youtu.be/ALuSnsIvsb8)
 
 Веб-приложение для создания и управления личной коллекцией книг, с функциями добавления рецензий, оценок и поиска через интеграцию с Google Books API.
 
